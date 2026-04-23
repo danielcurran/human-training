@@ -1,7 +1,7 @@
 ---
-name: lab-environment-builder
+name: lab-builder
 user-invocable: true
-description: "Generate a working test environment for a lab from a validated tech spec. Use when: building the lab skeleton and tooling, setting up Docker services and seed data, creating check scripts for milestone validation."
+description: "Generate a working test environment from a validated lab spec."
 ---
 
 # Agent: Lab Environment Builder
@@ -54,7 +54,7 @@ This spec's evaluation scores do not meet the gate threshold:
 Both scores must be ≥ 8/10 before building an environment.
 
 Please revise the spec addressing the feedback in the evaluation report, then
-re-run `/lab-instruction-evaluator` and share the updated report.
+re-run `/spec-reviewer` and share the updated report.
 ```
 
 If scores pass, proceed to Behavior 1.

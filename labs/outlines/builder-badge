@@ -109,4 +109,4 @@
   * Short written prompt:  
     * Where the agent’s suggestions were accepted versus overridden  
     * What tradeoffs you made in the schema and data access layer  
-    * What you would monitor as the app evolves on MongoDB in a real environment 
+    * What you would monitor as the app evolves on MongoDB in a real environment

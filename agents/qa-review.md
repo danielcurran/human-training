@@ -1,7 +1,7 @@
 ---
-name: lab-instructional-qa-reviewer
+name: qa-review
 user-invocable: true
-description: "Review a completed lab environment for instructional gaps, QA issues, and learner UX. Use when: validating lab clarity before release, identifying missing instructions or typos, assessing learner experience in the actual built environment, fixing UX/navigation problems, verifying all stages are completable as described."
+description: "Review a built lab for instructional completeness and learner UX."
 ---
 
 # Agent: Lab Instructional QA Reviewer
@@ -421,7 +421,7 @@ Save the review report to `labs/reports/[lab-name]-instructional-qa-review-v[N].
 ```markdown
 ---
 artifact: [name of lab reviewed]
-reviewer: lab-instructional-qa-reviewer
+reviewer: qa-review
 date: [ISO 8601 date]
 version: v[N]
 qa_status: [Ready for release / Minor fixes needed / Major revisions needed]

@@ -14,27 +14,27 @@ This directory contains specialized agents for creating, validating, and buildin
 The lab creation workflow follows this sequence:
 
 ```
-/lab-outline-designer
+/outline-builder
         ↓
-/lab-outline-converter
+/converter
         ↓
-/lab-instruction-evaluator
+/spec-reviewer
         ↓
-/lab-environment-builder
+/lab-builder
         ↓
-/lab-instructional-qa-reviewer
+/qa-review
 ```
 
 ---
 
 ## Agents
 
-### 1. Lab Outline Designer
-**Slash command:** `/lab-outline-designer`
+### 1. Outline Builder
+**Slash command:** `/outline-builder`
 
-**File:** [lab-outline-designer.md](lab-outline-designer.md)
+**File:** [outline-builder.md](outline-builder.md)
 
-Creates high-level lab outlines from a topic and learning objectives.
+Design a lab outline from learning objectives and concept scope.
 
 **Source of truth:** [Instructional Design Rulebook](../standards/instructional-design-rulebook.md) — Uses Sections 0.1, 0.2, 1-4 (backwards design, learning objectives, stage structure)
 
@@ -46,16 +46,16 @@ Creates high-level lab outlines from a topic and learning objectives.
 
 **Inputs:** Topic, target audience, environment, constraints
 **Output:** Lab outline saved to `labs/outlines/[lab-name]-outline.md`
-**Next step:** Run `/lab-outline-converter`
+**Next step:** Run `/converter`
 
 ---
 
-### 2. Lab Outline Converter
-**Slash command:** `/lab-outline-converter`
+### 2. Converter
+**Slash command:** `/converter`
 
-**File:** [lab-outline-converter.md](lab-outline-converter.md)
+**File:** [converter.md](converter.md)
 
-Converts high-level outlines into detailed technical specifications.
+Convert a lab outline into a detailed technical specification.
 
 **Source of truth:** [Instructional Design Rulebook](../standards/instructional-design-rulebook.md) — Uses Sections 5-13 (input/output clarity, scaffolding, testability, terminology, environment buildability)
 
@@ -66,16 +66,16 @@ Converts high-level outlines into detailed technical specifications.
 
 **Inputs:** Lab outline (file), target task, audience, platform
 **Output:** Tech spec saved to `labs/specs/[lab-name]-tech-spec.md`
-**Next step:** Run `/lab-instruction-evaluator`
+**Next step:** Run `/spec-reviewer`
 
 ---
 
-### 3. Lab Instruction Evaluator
-**Slash command:** `/lab-instruction-evaluator`
+### 3. Spec Reviewer
+**Slash command:** `/spec-reviewer`
 
-**File:** [lab-instruction-evaluator.md](lab-instruction-evaluator.md)
+**File:** [spec-reviewer.md](spec-reviewer.md)
 
-Validates lab specs for quality, clarity, and learner effectiveness using a three-pass approach.
+Evaluate a lab specification for quality and buildability.
 
 **Source of truth:** [Instructional Design Rulebook](../standards/instructional-design-rulebook.md) — Uses Section 12 (7-criteria evaluation: task clarity, input/output definition, coherence, testability, failure fallbacks, concept coverage, buildability)
 
@@ -87,16 +87,16 @@ Validates lab specs for quality, clarity, and learner effectiveness using a thre
 **Inputs:** Lab tech spec (file)
 **Output:** Evaluation report saved to `labs/reports/[lab-name]-tech-spec-eval-v[N].md`
 **Gate:** Spec must score ≥8/10 on both Spec Quality and Resulting Lab Quality
-**Next step:** If passing, run `/lab-environment-builder`; otherwise, revise spec
+**Next step:** If passing, run `/lab-builder`; otherwise, revise spec
 
 ---
 
-### 4. Lab Environment Builder
-**Slash command:** `/lab-environment-builder`
+### 4. Lab Builder
+**Slash command:** `/lab-builder`
 
-**File:** [lab-environment-builder.md](lab-environment-builder.md)
+**File:** [lab-builder.md](lab-builder.md)
 
-Generates working test environments from validated tech specs.
+Generate a working test environment from a validated lab spec.
 
 **Source of truth:** [Instructional Design Rulebook](../standards/instructional-design-rulebook.md) — Uses Sections 0.2 (backwards design), 7 (milestone checks), 11 (environment buildability)
 
@@ -111,12 +111,12 @@ Generates working test environments from validated tech specs.
 
 ---
 
-### 5. Lab Instructional QA Reviewer
-**Slash command:** `/lab-instructional-qa-reviewer`
+### 5. QA Review
+**Slash command:** `/qa-review`
 
-**File:** [lab-instructional-qa-reviewer.md](lab-instructional-qa-reviewer.md)
+**File:** [qa-review.md](qa-review.md)
 
-Reviews completed lab environments for instructional gaps, QA issues, and learner UX—focusing on the actual learner experience in the built lab.
+Review a built lab for instructional completeness and learner UX—focusing on the actual learner experience.
 
 **Source of truth:** [Instructional Design Rulebook](../standards/instructional-design-rulebook.md) — Uses Sections 1 (prerequisites), 6 (scaffolding), 7 (milestone clarity), 8 (learner voice)
 
@@ -129,7 +129,7 @@ Reviews completed lab environments for instructional gaps, QA issues, and learne
 - Improving UX and navigation
 - Checking stage-by-stage completability
 
-**Inputs:** Built lab environment (from `/lab-environment-builder`)
+**Inputs:** Built lab environment (from `/lab-builder`)
 **Output:** QA Review report saved to `labs/reports/[lab-name]-instructional-qa-review-v[N].md`
 **Gate:** Ready for release / Minor fixes needed / Major revisions needed
 **Next step:** If major revisions needed, feed back to spec or builder; otherwise, lab is ready for learners
@@ -186,7 +186,7 @@ lab-test-env/
 ### Step 1: Design the Outline
 
 ```
-/lab-outline-designer
+/outline-builder
 
 Topic: Learning to build REST APIs
 Audience: JavaScript developers new to Express
@@ -198,7 +198,7 @@ Output: `labs/outlines/rest-api-outline.md`
 ### Step 2: Convert to Spec
 
 ```
-/lab-outline-converter #file labs/outlines/rest-api-outline.md
+/converter #file labs/outlines/rest-api-outline.md
 ```
 
 Output: `labs/specs/rest-api-tech-spec.md`
@@ -206,7 +206,7 @@ Output: `labs/specs/rest-api-tech-spec.md`
 ### Step 3: Evaluate
 
 ```
-/lab-instruction-evaluator #file labs/specs/rest-api-tech-spec.md
+/spec-reviewer #file labs/specs/rest-api-tech-spec.md
 ```
 
 Output: `labs/reports/rest-api-tech-spec-eval-v1.md`
@@ -216,11 +216,20 @@ Check: Both scores ≥ 8/10? If yes, proceed to Step 4.
 ### Step 4: Build Environment
 
 ```
-/lab-environment-builder #file labs/specs/rest-api-tech-spec.md
+/lab-builder #file labs/specs/rest-api-tech-spec.md
 Lab name: rest-api
 ```
 
 Output: `lab-test-env/rest-api/` ready to run
+
+### Step 5: QA Review
+
+```
+/qa-review
+Lab name: rest-api
+```
+
+Output: `labs/reports/rest-api-instructional-qa-review-v1.md`
 
 ### Verify
 

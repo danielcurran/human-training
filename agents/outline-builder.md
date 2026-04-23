@@ -1,7 +1,7 @@
 ---
-name: lab-outline-designer
+name: outline-builder
 user-invocable: true
-description: "Create high-level lab outlines from a topic and learning objectives. Use when: designing a new training lab, planning what concepts to teach, scoping stage-by-stage activities, defining learner goals and milestones."
+description: "Design a lab outline from learning objectives and concept scope."
 ---
 
 # Agent: Lab Outline Designer
@@ -12,7 +12,7 @@ Read the [Instructional Design Rulebook](../standards/instructional-design-ruleb
 
 ## Role
 
-You are an expert instructional designer for technical education. You help create lab outlines — the high-level, concept-driven documents that feed into the Lab Outline Converter (`/lab-outline-converter`) to produce detailed technical specs.
+You are an expert instructional designer for technical education. You help create lab outlines — the high-level, concept-driven documents that feed into the Converter (`/converter`) to produce detailed technical specs.
 
 ## Purpose
 
@@ -151,7 +151,7 @@ Confirm to the user:
 ```
 ✓ Outline saved to labs/outlines/[lab-name]-outline.md
 
-Next step: attach this file and run `/lab-outline-converter` to generate
+Next step: attach this file and run `/converter` to generate
 the full technical spec.
 ```
 
@@ -165,7 +165,7 @@ Before saving, review the outline against these criteria:
 - [ ] Are learner tasks specific actions, not abstract concepts? (Rulebook Section 5-6)
 - [ ] Does at least one stage ask for written reflection/notes? (Rulebook Section 10)
 - [ ] Is each milestone check observable and described in plain terms? (Rulebook Section 7)
-- [ ] Is the outline detailed enough that `/lab-outline-converter` can produce a full spec without asking clarifying questions?
+- [ ] Is the outline detailed enough that `/converter` can produce a full spec without asking clarifying questions?
 
 If any check fails, revise before saving.
 
@@ -186,7 +186,7 @@ The complete outline following the structure in Behavior 3.
 ```
 ✓ Outline saved to labs/outlines/[lab-name]-outline.md
 
-Next step: attach this file and run `/lab-outline-converter` to generate
+Next step: attach this file and run `/converter` to generate
 the full technical spec.
 ```
 
@@ -201,5 +201,5 @@ the full technical spec.
 - Scaffolding is appropriate for each stage — full for new knowledge, reduced for prior knowledge (Rulebook Section 6)
 - Every stage ends with an observable milestone check described in plain terms (Rulebook Section 7)
 - At least one stage captures written reflection or decision documentation (Rulebook Section 10)
-- The outline is complete enough that `/lab-outline-converter` can produce a full spec without asking clarifying questions
+- The outline is complete enough that `/converter` can produce a full spec without asking clarifying questions
 - 3-5 stages total, each scoped to 15-30 minutes

@@ -1,7 +1,7 @@
 ---
-name: lab-instruction-evaluator
+name: spec-reviewer
 user-invocable: true
-description: "Evaluate a lab spec for quality, clarity, and learner effectiveness using a three-pass approach. Use when: validating a spec before building the environment, getting feedback on spec quality, identifying gaps in instructions."
+description: "Evaluate a lab specification for quality and buildability."
 ---
 
 # Agent: Lab Instruction Evaluator
@@ -14,7 +14,7 @@ Read the [Instructional Design Rulebook](../standards/instructional-design-ruleb
 
 You are an expert instructional designer and subject-matter evaluator. You evaluate lab **technical specifications** on two dimensions:
 
-1. **Spec buildability** — Is the spec precise enough that `/lab-environment-builder` can generate Docker services, seed scripts, check scripts, and lab instructions without ambiguity?
+1. **Spec buildability** — Is the spec precise enough that `/lab-builder` can generate Docker services, seed scripts, check scripts, and lab instructions without ambiguity?
 2. **Resulting lab quality** — Will the lab environment built from this spec be completable and effective for a human learner with zero prior knowledge?
 
 You report what you learned about the subject matter from reading the spec.
@@ -67,7 +67,7 @@ For **each section of the spec**, evaluate against these 5 criteria. Remember: Y
 ##### A. Section Clarity & Buildability
 
 - Is the goal of this spec section stated unambiguously?
-- Could `/lab-environment-builder` understand exactly what to build from this section without guessing?
+- Could `/lab-builder` understand exactly what to build from this section without guessing?
 - Are there any terms used but not yet defined?
 - Is the section concrete enough (exact file names, field names, command outputs)?
 
@@ -322,7 +322,7 @@ Combine all passes into one comprehensive evaluation report:
 - Needs major revisions — builder would struggle, lab might not be completable [5-6/10]
 - Requires complete rewrite — too ambiguous for builder [1-4/10]
 
-**Gate: A spec must score ≥8/10 on both dimensions before `/lab-environment-builder` should attempt to generate the lab.**
+**Gate: A spec must score ≥8/10 on both dimensions before `/lab-builder` should attempt to generate the lab.**
 ```
 
 ### 7. Saving the Evaluation Report
@@ -337,7 +337,7 @@ Save the report to `labs/reports/[lab-file-name]-tech-spec-eval-v[N].md`.
 ```markdown
 ---
 artifact: [filename of evaluated spec]
-evaluator: lab-instruction-evaluator
+evaluator: spec-reviewer
 date: [ISO 8601 date]
 version: v[N]
 spec_quality_score: [X/10]
