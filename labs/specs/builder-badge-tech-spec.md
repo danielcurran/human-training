@@ -19,6 +19,95 @@ Design and review a MongoDB-first data model, query optimization strategy, and o
 
 ---
 
+## Lab Concepts: MongoDB Design Thinking
+
+Before you start the stages, understand the core MongoDB concepts you'll be deciding about.
+
+### Why MongoDB Differs from SQL
+
+SQL normalizes data across separate tables to eliminate duplication:
+```sql
+CREATE TABLE customers (id, name, email);
+CREATE TABLE orders (id, customer_id, total);
+SELECT o.*, c.* FROM orders o JOIN customers c ON o.customer_id = c.id;
+```
+
+MongoDB embeds related data in documents:
+```json
+{
+  "_id": "ORD-123",
+  "customer": { "id": "C-1", "name": "Alice", "email": "alice@example.com" },
+  "total": 150,
+  "created_at": "2024-01-15"
+}
+```
+
+### Embedding vs. Referencing: The Core Tradeoff
+
+**Embedding** — Store related data inside a document:
+- **Pros:** Single read (fast); automatic consistency; no $lookup needed
+- **Cons:** Updates are complex; data duplication; limited to 16MB per document
+- **Use when:** You mostly read both together (e.g., "Get order WITH customer details")
+
+**Referencing** — Store as separate collections, link by ID:
+```json
+// customers collection
+{ "_id": "C-1", "name": "Alice" }
+
+// orders collection
+{ "_id": "ORD-123", "customer_id": "C-1", "total": 150 }
+```
+- **Pros:** Flexible; no duplication; independent updates
+- **Cons:** Multiple reads needed; requires $lookup joins (slower)
+- **Use when:** You update them separately (e.g., "Update customer email WITHOUT touching orders")
+
+### How to Choose: Think About Your Access Patterns
+
+- **Mostly read orders WITH customers?** → Embed
+- **Update customers independently of orders?** → Reference
+- **Both frequently?** → Hybrid (embed some data, reference others)
+
+### MongoDB Query Patterns
+
+**find() — Simple filters** (like SQL WHERE)
+```javascript
+db.orders.find({ customer_id: "C-1" })  // Fast; works on indexed fields
+```
+
+**aggregate() — Complex transformations** (like SQL with subqueries)
+```javascript
+db.orders.aggregate([
+  { $match: { status: "pending" } },
+  { $group: { _id: "$customer_id", total: { $sum: "$amount" } } },
+  { $sort: { total: -1 } }
+])
+```
+
+**$lookup — Join collections** (like SQL JOIN)
+```javascript
+db.orders.aggregate([
+  {
+    $lookup: {
+      from: "customers",
+      localField: "customer_id",
+      foreignField: "_id",
+      as: "customer"
+    }
+  }
+])
+```
+
+### Your Job in This Lab
+
+You'll make **3 intentional design decisions** using MongoDB concepts:
+1. **Stage 1:** Choose a schema based on embedding vs. referencing tradeoffs
+2. **Stage 2:** Understand and approve MongoDB queries (find, aggregate, $lookup)
+3. **Stage 3:** Implement vector search for semantic search
+
+Each decision is backed by reasoning about **access patterns** and **tradeoffs** — not just "pick the one that sounds right."
+
+---
+
 ## Lab Sections
 
 ### Section 1: Schema Design Decision (5–10 min)
@@ -27,16 +116,26 @@ Design and review a MongoDB-first data model, query optimization strategy, and o
 
 #### Learner Context
 
-Your SQL-backed app is being evaluated for MongoDB. The data has already been migrated, but the schema still replicates SQL structure (normalized tables). Your job: review 3 MongoDB schema alternatives, pick one, document your reasoning.
+Your SQL-backed app is being evaluated for MongoDB. The data has already been migrated, but the schema still replicates SQL structure (normalized tables). 
+
+**Your job:** Review 3 MongoDB schema alternatives. Each makes different tradeoffs (embedding vs. referencing). Pick one based on your **read patterns**.
+
+**Remember:** Embedding (fast reads, complex updates) vs. Referencing (flexible, slower reads). Which favors your most common queries?
 
 #### Learner Action
 
 1. **Invoke agent:** `/design-lab-schema`
    - **Agent generates:** 3 complete MongoDB schema alternatives for orders/customers/products
    - Each shows: collections, embedding strategy, indexes, read/write patterns, pros/cons
-2. **Learner decision (5 min):**
+   - Each includes sample data for the e-commerce app (10 customers, 20 products, 5 orders)
+2. **Explore (2 min):**
+   - Agent has loaded sample data for each schema option
+   - Run: `npm run explore:schema -- 1` to see latency of "Get order with customer" for each option
+   - Notice: Embedded schema answers faster (single read) vs. referenced schema (requires $lookup)
+3. **Learner decision (3 min):**
    - Read all 3 alternatives
-   - Pick one (or hybrid) based on: "Which favors our read patterns?"
+   - Which one favors your **read patterns**? (The one where most queries are fast?)
+   - Pick one (or hybrid) based on reasoning, not gut feeling
    - Answer in `schema-choice.md`:
      ```markdown
      # Schema Choice
@@ -47,10 +146,11 @@ Your SQL-backed app is being evaluated for MongoDB. The data has already been mi
      
      Tradeoff accepted: [1 sentence: what are we sacrificing?]
      ```
-3. **Agent deploys:** `/deploy-schema`
+4. **Agent deploys:** `/deploy-schema`
    - Agent implements chosen schema into MongoDB
    - Creates indexes
    - Seeds sample data
+   - Learner can now query the MongoDB instance and verify the schema works
 
 #### Artifacts Learner Produces
 
@@ -64,9 +164,34 @@ Your SQL-backed app is being evaluated for MongoDB. The data has already been mi
 
 **Validates:**
 - `schema-choice.md` exists and is ≥50 words
-- MongoDB schema matches chosen option
+- MongoDB schema matches chosen option (collections, embedding strategy)
 - Indexes created
 - Sample data seeded
+
+**Expected output:**
+```
+✓ Schema deployed and ready
+
+Collections created:
+  ✓ orders
+  ✓ customers
+  ✓ products
+
+Indexes created:
+  ✓ orders._id (primary)
+  ✓ customers._id (primary)
+  ✓ products._id (primary)
+  ✓ orders.customer_id (if option uses referencing)
+
+Sample data seeded:
+  ✓ 10 customers
+  ✓ 20 products
+  ✓ 5 orders
+
+Schema choice documented:
+  File: schema-choice.md
+  Words: 67 (meets 50-word minimum)
+```
 
 **Success:** "✓ Schema deployed and ready"
 
@@ -79,6 +204,23 @@ Your SQL-backed app is being evaluated for MongoDB. The data has already been mi
 #### Learner Context
 
 Your schema is now MongoDB-first. The agent has refactored your 4 core SQL queries to MongoDB idioms (find, aggregation, $lookup). Your job: review them, understand the tradeoffs, approve.
+
+**Remember these MongoDB query patterns:**
+- **find()** — Simple equality/range filters (like SQL WHERE)
+  - Fast when using indexes
+  - Used for single-collection queries
+- **aggregate()** — Complex multi-stage transformations (like SQL with subqueries + GROUP BY)
+  - More powerful than find()
+  - Slower but flexible for complex operations
+- **$lookup** — Join collections (like SQL JOIN)
+  - Simulates the referencing pattern
+  - Required when you didn't embed data
+  - More expensive than embedded queries
+
+**Your job:** For each query, understand:
+1. Why the agent chose this approach (find vs. aggregate vs. $lookup)
+2. What tradeoff was made (performance vs. flexibility)
+3. Whether this query works for YOUR schema choice from Stage 1
 
 #### Learner Action
 
@@ -117,9 +259,32 @@ Your schema is now MongoDB-first. The agent has refactored your 4 core SQL queri
 
 **Validates:**
 - `query-review.md` exists with all 4 queries marked approved
-- All queries implemented in MongoDB
-- Unit tests pass (0 SQL usage)
-- Query performance <100ms
+- All queries implemented in MongoDB (no SQL)
+- Unit tests pass (12/12)
+- Query performance <100ms each
+
+**Expected output:**
+```
+✓ Queries optimized and tested
+
+Query implementations:
+  ✓ Query 1: getOrderWithCustomer (aggregation with $lookup) – 45ms
+  ✓ Query 2: listRecentOrders (find with sort) – 30ms
+  ✓ Query 3: getProductsByCategory (find with filter) – 20ms
+  ✓ Query 4: countOrdersByCustomerStatus (aggregation with $group) – 55ms
+
+All queries <100ms: ✓
+No SQL usage detected: ✓
+
+Unit tests: 12/12 passing
+  ✓ Test 1: getOrderWithCustomer returns customer data
+  ✓ Test 2: listRecentOrders sorts by date descending
+  ... (9 more)
+
+Query review documented:
+  File: query-review.md
+  Queries approved: 4/4
+```
 
 **Success:** "✓ Queries optimized and tested"
 
@@ -131,21 +296,28 @@ Your schema is now MongoDB-first. The agent has refactored your 4 core SQL queri
 
 #### Learner Context
 
-MongoDB supports vector search natively. Your job: decide which collection benefits most from semantic search, approve the implementation, test it.
+MongoDB supports vector search natively. Your job: based on your schema choice from Stage 1, the agent will implement vector search for the most appropriate collection. Approve the implementation and test it.
+
+**Reminder:** Depending on your Stage 1 choice:
+- If you chose **embedded products**, vector search targets products within the order document
+- If you chose **normalized products**, vector search targets the products collection
+- If you chose **hybrid**, vector search targets whichever collection benefits most
 
 #### Learner Action
 
 1. **Invoke agent:** `/implement-vector-search`
-   - **Agent generates:** Vector search implementation for products collection
-   - Shows: index definition, embedding approach, sample search query
+   - **Input:** Your chosen schema from Stage 1
+   - **Agent generates:** Vector search implementation for the BEST collection in YOUR schema
+   - Shows: index definition, embedding approach, sample search query adapted to your choice
 2. **Learner decision (5 min):**
-   - Review implementation
+   - Review the implementation (it's adapted to your schema, not a generic template)
+   - Understand: Why vector search for this specific collection?
    - Test manually: `npm run search -- "outdoor backpack"`
    - Answer in `vector-choice.md`:
      ```markdown
      # Vector Search Choice
      
-     Collection: products
+     Collection: [products OR orders OR other, depending on your schema]
      
      Use case: [e.g., "Recommend similar products to customer"]
      
@@ -154,7 +326,7 @@ MongoDB supports vector search natively. Your job: decide which collection benef
      Approved: ✓
      ```
 3. **Agent verifies:** `/validate-vector-search`
-   - Agent runs test suite for vector search
+   - Agent runs test suite for vector search on YOUR chosen collection
    - All tests must pass
 
 #### Artifacts Learner Produces
@@ -169,9 +341,40 @@ MongoDB supports vector search natively. Your job: decide which collection benef
 
 **Validates:**
 - `vector-choice.md` exists with approval
-- Vector index created
-- Sample search returns results
-- Test suite passes
+- Vector index created on the appropriate collection (adapted to your Stage 1 choice)
+- Sample search returns semantically related results
+- Test suite passes (8/8)
+
+**Expected output:**
+```
+✓ Vector search live and tested
+
+Vector search configuration:
+  Collection: [products OR orders OR other, based on your schema]
+  Field: description (or product_name, depending on your schema)
+  Embeddings model: OpenAI ada-002
+  Index type: vector
+  Index status: ✓ Created
+
+Sample search test:
+  Query: "outdoor backpack"
+  Results:
+    1. Hiking Backpack 60L (similarity: 0.97)
+    2. Weekend Adventure Pack (similarity: 0.91)
+    3. Kids Explorer Backpack (similarity: 0.85)
+  ✓ Returns semantically related products
+
+Test suite: 8/8 passing
+  ✓ Index query latency <50ms
+  ✓ Returns top-K results correctly
+  ... (6 more tests)
+
+Vector choice documented:
+  File: vector-choice.md
+  Collection: [your choice]
+  Use case specified: ✓
+  Test result: ✓ Passed
+```
 
 **Success:** "✓ Vector search live and tested"
 
@@ -378,3 +581,296 @@ volumes:
 - **Learner focus:** Review decisions, understand tradeoffs, write brief reflections
 
 This is a **decision lab**, not a **coding lab**. The goal is to teach MongoDB design thinking through intentional choices, not through manual implementation.
+
+---
+
+## Appendix A: Core Specifications for Agents
+
+### The 4 SQL Queries to Migrate
+
+These are the queries the agent will convert from SQL to MongoDB idioms in Stage 2. All use the `orders`, `customers`, and `products` tables from a typical e-commerce database.
+
+#### Query 1: Get Order with Customer Details
+
+**SQL Version:**
+```sql
+SELECT o.id, o.total, o.created_at, c.id, c.name, c.email
+FROM orders o
+JOIN customers c ON o.customer_id = c.id
+WHERE o.id = ?
+```
+
+**Purpose:** Retrieve a single order with its associated customer information (needed for order confirmation emails, customer support)
+
+**Parameters:** `order_id` (String)
+
+**Expected Columns:** order_id, total, created_at, customer_id, customer_name, customer_email
+
+#### Query 2: List Recent Orders (with Pagination)
+
+**SQL Version:**
+```sql
+SELECT o.id, o.total, o.created_at, c.name
+FROM orders o
+JOIN customers c ON o.customer_id = c.id
+ORDER BY o.created_at DESC
+LIMIT 10 OFFSET ?
+```
+
+**Purpose:** Show dashboard of recent orders (needed for dashboard, recent activity feed)
+
+**Parameters:** `offset` (Number, for pagination)
+
+**Expected Columns:** order_id, total, created_at, customer_name (10 most recent orders)
+
+#### Query 3: Get Products by Category
+
+**SQL Version:**
+```sql
+SELECT id, name, description, price, category
+FROM products
+WHERE category = ?
+ORDER BY price ASC
+```
+
+**Purpose:** List all products in a category (needed for category pages, product browsing)
+
+**Parameters:** `category` (String, e.g., "backpacks", "tents")
+
+**Expected Columns:** product_id, name, description, price, category (sorted by price ascending)
+
+#### Query 4: Count Orders by Customer Status
+
+**SQL Version:**
+```sql
+SELECT c.id, c.name, COUNT(o.id) as order_count, SUM(o.total) as total_spent
+FROM customers c
+LEFT JOIN orders o ON c.id = o.customer_id
+GROUP BY c.id, c.name
+ORDER BY total_spent DESC
+```
+
+**Purpose:** Generate customer analytics (VIP customers, repeat purchase patterns)
+
+**Parameters:** None
+
+**Expected Columns:** customer_id, customer_name, order_count, total_spent (sorted by total_spent descending)
+
+---
+
+### The 3 MongoDB Schema Alternatives
+
+These are the three schema options the agent will present in Stage 1 for the learner to evaluate. Each makes different tradeoffs on embedding vs. referencing.
+
+#### Option A: Denormalized (Embedded Everything)
+
+**Rationale:** Optimize for read performance. Customer and product data are embedded in order documents.
+
+**Collections:**
+
+**orders collection:**
+```json
+{
+  "_id": ObjectId,
+  "order_id": "ORD-12345",
+  "customer": {
+    "id": "C-001",
+    "name": "Alice Johnson",
+    "email": "alice@example.com"
+  },
+  "products": [
+    {
+      "id": "P-100",
+      "name": "Hiking Backpack 60L",
+      "description": "Durable outdoor backpack",
+      "category": "backpacks",
+      "price": 150
+    }
+  ],
+  "total": 150,
+  "created_at": ISODate("2024-01-15T10:30:00Z"),
+  "status": "confirmed"
+}
+```
+
+**Pros:**
+- Single read for "Get order with customer" (Query 1) — very fast
+- No $lookup joins needed
+- Automatic consistency (customer data locked with order)
+
+**Cons:**
+- Update customer email requires updating all their orders (complex)
+- Data duplication (same customer appears in multiple orders)
+- Document size limited to 16MB
+- Product price history lost (can't see what price was paid vs. current price)
+
+**Read/Write Patterns:**
+- Best for: Read-heavy access (dashboard showing orders + customer details)
+- Poor for: Frequent customer updates, inventory management
+
+**Indexes:**
+```
+db.orders.createIndex({ "order_id": 1 })
+db.orders.createIndex({ "customer.id": 1 })
+db.orders.createIndex({ "created_at": -1 })
+```
+
+---
+
+#### Option B: Normalized (Separate Collections)
+
+**Rationale:** Optimize for independent updates and flexibility. Collections remain separate, linked by IDs.
+
+**Collections:**
+
+**customers collection:**
+```json
+{
+  "_id": "C-001",
+  "name": "Alice Johnson",
+  "email": "alice@example.com",
+  "created_at": ISODate("2024-01-01T00:00:00Z")
+}
+```
+
+**products collection:**
+```json
+{
+  "_id": "P-100",
+  "name": "Hiking Backpack 60L",
+  "description": "Durable outdoor backpack",
+  "category": "backpacks",
+  "price": 150,
+  "stock": 45
+}
+```
+
+**orders collection:**
+```json
+{
+  "_id": ObjectId,
+  "order_id": "ORD-12345",
+  "customer_id": "C-001",
+  "product_ids": ["P-100"],
+  "total": 150,
+  "created_at": ISODate("2024-01-15T10:30:00Z"),
+  "status": "confirmed"
+}
+```
+
+**Pros:**
+- Update customer email once (all orders automatically see new email via $lookup)
+- No data duplication
+- Independent collection updates
+- Can track product price history separately
+
+**Cons:**
+- "Get order with customer" requires $lookup join (slower, multiple round-trips)
+- More complex queries (aggregation pipelines)
+- Risk of inconsistency (customer deleted but orders reference them)
+
+**Read/Write Patterns:**
+- Best for: Frequent customer/product updates, complex analytics
+- Poor for: Simple read-heavy dashboard queries
+
+**Indexes:**
+```
+db.customers.createIndex({ "_id": 1 })
+db.products.createIndex({ "_id": 1 })
+db.orders.createIndex({ "order_id": 1 })
+db.orders.createIndex({ "customer_id": 1 })
+db.orders.createIndex({ "created_at": -1 })
+```
+
+---
+
+#### Option C: Hybrid (Embed Customer, Reference Products)
+
+**Rationale:** Balance of both. Customer data embedded (read-friendly for orders), products referenced (flexible inventory management).
+
+**Collections:**
+
+**orders collection:**
+```json
+{
+  "_id": ObjectId,
+  "order_id": "ORD-12345",
+  "customer": {
+    "id": "C-001",
+    "name": "Alice Johnson",
+    "email": "alice@example.com"
+  },
+  "items": [
+    {
+      "product_id": "P-100",
+      "quantity": 1,
+      "price_at_purchase": 150
+    }
+  ],
+  "total": 150,
+  "created_at": ISODate("2024-01-15T10:30:00Z"),
+  "status": "confirmed"
+}
+```
+
+**products collection:**
+```json
+{
+  "_id": "P-100",
+  "name": "Hiking Backpack 60L",
+  "description": "Durable outdoor backpack",
+  "category": "backpacks",
+  "price": 150,
+  "stock": 45
+}
+```
+
+**Pros:**
+- "Get order with customer" is fast (single read, no $lookup)
+- Can update product descriptions independently
+- Price history preserved (price_at_purchase stored with order)
+- Moderate complexity
+
+**Cons:**
+- Customer updates still require updating all orders (moderate complexity)
+- Slightly more data than fully normalized
+- "Get products by category" needs to query products collection (not included in order)
+
+**Read/Write Patterns:**
+- Best for: Most e-commerce apps (fast order reads, flexible product management)
+- Decent for: Mixed workloads
+
+**Indexes:**
+```
+db.orders.createIndex({ "order_id": 1 })
+db.orders.createIndex({ "customer.id": 1 })
+db.orders.createIndex({ "created_at": -1 })
+db.products.createIndex({ "category": 1, "price": 1 })
+```
+
+---
+
+### Sample Data for Seeding
+
+**Customers (10 total):**
+```json
+[
+  { "_id": "C-001", "name": "Alice Johnson", "email": "alice@example.com" },
+  { "_id": "C-002", "name": "Bob Smith", "email": "bob@example.com" },
+  ...8 more customers...
+]
+```
+
+**Products (20 total):**
+```json
+[
+  { "_id": "P-100", "name": "Hiking Backpack 60L", "category": "backpacks", "price": 150 },
+  { "_id": "P-101", "name": "Camping Tent 2-Person", "category": "tents", "price": 200 },
+  ...18 more products...
+]
+```
+
+**Orders (5 total, distributed across schema options):**
+- Each schema alternative will seed the same orders, formatted according to its embedding/referencing strategy
+- Sample data ensures Query 1–4 have results to return
+- Sample data includes enough variation to show query capabilities (multiple categories, multiple customers, multiple orders)
