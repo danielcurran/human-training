@@ -18,6 +18,8 @@ You are an expert instructional designer for technical education. You help creat
 
 Produce a complete lab outline for a new training lab. The outline must capture learning objectives, the lab narrative and environment, and a stage-by-stage walkthrough with milestone checks — with enough detail that the Lab Outline Converter can generate a full technical spec without ambiguity.
 
+**All outlines must follow the structure and style of the [builder-badge template](../labs/outlines/builder-badge). This is the canonical template for all lab outlines.**
+
 ## Inputs
 
 - **Topic or capability**: what concept, skill, or workflow the lab should teach
@@ -56,78 +58,89 @@ Before writing the outline, state:
 **Target environment:** [local VS Code / cloud IDE / other]
 **Assumptions made:** [list or "none"]
 **Estimated lab duration:** [minutes, rough estimate]
+**Template reference:** Using [builder-badge structure](../labs/outlines/builder-badge) — numbered stages with Goal, Learner tasks, Milestone check
 ```
 
 ### 3. Generate the Lab Outline
 
-Follow this structure exactly:
+Follow this structure exactly. **Reference template:** [labs/outlines/builder-badge](../labs/outlines/builder-badge)
 
 ```markdown
 # Lab: [Title]
 
-## Learning Objectives
+## Learning objectives
 
-* [Objective 1 — specific, measurable, using action verbs like build/implement/design]
+* [Objective 1 — specific, measurable, using action verbs like understand/use/design/implement]
 * [Objective 2]
 * [Objective 3]
-* (3-6 objectives total — see Rulebook Section 1)
+* (5-8 objectives total — see Rulebook Section 1)
 
-## Narrative and Environment
+## Narrative and environment
 
-* [1-2 sentences describing the scenario — what the learner is doing and why]
+* [2-3 sentences describing the scenario — what the learner is doing and why, the real-world context]
 * The lab runs in [environment] with:
   * [Pre-installed tools and services]
   * [What is already set up vs. what the learner must build]
-  * [Any libraries, frameworks, or services needed]
-* [Description of what's intentionally incomplete or wrong at the start]
+  * [Any libraries, frameworks, or services available to learners]
+* [Explanation of intentional starting state — what is incomplete or non-ideal and why learner needs to fix it]
 
 ## Lab Walkthrough
 
-### Stage 1: [Title]
+1. ## [Stage 1 Title]
 
-**KLI type:** [Memory and Fluency / Induction and Refinement — see Rulebook Section 3]
-**Goal:** [One sentence describing the concrete outcome of this stage]
+   **Goal: [one sentence describing the concrete outcome of this stage]**
+   
+* [Exploration context or sense-making framing if needed — see Rulebook Section 4]
+* [Key exploration or discovery task — what learner should understand before building]
+* Learner tasks:
+  * [Task 1 — specific action]
+  * [Task 2 — specific action, may include a written artifact or reflection]
+* Milestone check:
+  * [What validation confirms completion]
+  * [What learner should see as evidence of success]
 
-* [Sense-making framing if this stage overrides prior knowledge assumptions — see Rulebook Section 4]
-* [Activity or exploration task — numbered list of what learner does]
-* [Any tools or frameworks used in this stage]
+2. ## [Stage 2 Title]
+
+   **Goal: [one sentence describing the concrete outcome]**
+   
+* [Exploration or discovery context]
 * Learner tasks:
   * [Task 1]
-  * [Task 2 — include any written reflection or artifact to produce]
+  * [Task 2]
 * Milestone check:
-  * [What the check script validates]
-  * [Expected outcome in plain terms]
+  * [What validation confirms completion]
 
-### Stage 2: [Title]
+3. ## [Stage 3 Title]
 
-**KLI type:** [...]
-**Goal:** [...]
+   **Goal: [one sentence describing the concrete outcome]**
+   
+* [Exploration or discovery context]
+* Learner tasks:
+  * [Task 1]
+  * [Task 2]
+* Milestone check:
+  * [What validation confirms completion]
 
-[Continue with same structure]
-
-### Stage 3: [Title]
-
-[Continue...]
-
-[Additional stages as needed, 3-5 total]
-
-## Resources and Glossary
-
-* [Domain-specific terms the learner will encounter]
-* [Links to official documentation]
-* [Any SQL/prior-experience comparisons if relevant]
+[Additional stages as needed — 3-5 total. Follow the same numbered format above.]
 ```
+
+**Template notes:**
+- Use numbered stages (1., 2., 3.) not subheadings with ###
+- Each stage has exactly three sections: Goal, Learner tasks (bulleted), Milestone check (bulleted)
+- Include exploration or sense-making context before learner tasks
+- Milestone checks describe what learner sees, not just technical validation
 
 #### Stage Design Rules
 
 Apply Rulebook Sections 2, 3, 4, 5, and 6 when breaking the lab into stages. Key requirements:
 
 1. **3-5 stages total** — not fewer, not more. Each stage should take 15-30 minutes.
-2. **Each stage states its KLI type** — Is this about building automaticity (Memory and Fluency) or applying knowledge to new situations (Induction and Refinement)?
-3. **Scaffolding reduces correctly** — Full scaffolding for new knowledge, reduced scaffolding for prior knowledge. Do NOT reduce scaffolding just because a concept appeared earlier if it's being used in a new context.
-4. **Sense-making framing** — If this stage overrides a common prior misconception (e.g., "SQL thinking" when learning NoSQL), include explicit reframing before the activity.
-5. **At least one stage requires written reflection** — One stage should ask the learner to document a decision or tradeoff they made.
-6. **Each stage has a milestone check** — Described in plain terms, not technical jargon.
+2. **Each stage has a Goal** — One clear sentence describing the concrete outcome (not abstract learning, but what learner builds or understands).
+3. **Exploration context before tasks** — If this stage introduces a new concept or overrides prior knowledge (e.g., "SQL thinking" when learning NoSQL), include explicit reframing or exploration guidance before learner tasks.
+4. **Learner tasks are specific actions** — Not "understand X" but "use Y to do Z", "refactor X to use Y", "record your decision in FILE.md".
+5. **At least one task includes written reflection** — One stage should ask learner to document a decision, tradeoff, or observation they made (in NOTES.md or similar).
+6. **Milestone check is observable** — What should the learner see or verify that proves they completed this stage? (e.g., "tests pass", "script output shows X", "document contains Y").
+7. **Use numbered stages (1., 2., 3.)** — Not subheadings with ###. Consistent with builder-badge template.
 
 ### 4. Save the Outline
 
@@ -147,10 +160,11 @@ the full technical spec.
 Before saving, review the outline against these criteria:
 
 - [ ] Are learning objectives specific and measurable? (Rulebook Section 1)
-- [ ] Does each stage state its KLI type? (Rulebook Section 3)
-- [ ] Are there 3-5 stages, each taking 15-30 minutes? (Rulebook Section 2)
-- [ ] Is there sense-making framing where needed? (Rulebook Section 4)
-- [ ] Does at least one stage ask for written reflection? (Rulebook Section 10)
+- [ ] Are there 3-5 numbered stages, each with Goal, Learner tasks, Milestone check? (Structure matches builder-badge template)
+- [ ] Does each stage include exploration/sense-making context before learner tasks? (Rulebook Section 4)
+- [ ] Are learner tasks specific actions, not abstract concepts? (Rulebook Section 5-6)
+- [ ] Does at least one stage ask for written reflection/notes? (Rulebook Section 10)
+- [ ] Is each milestone check observable and described in plain terms? (Rulebook Section 7)
 - [ ] Is the outline detailed enough that `/lab-outline-converter` can produce a full spec without asking clarifying questions?
 
 If any check fails, revise before saving.
@@ -180,11 +194,12 @@ the full technical spec.
 
 ## Success Criteria
 
-- Learning objectives are specific and measurable (Rulebook Section 1)
-- Every stage states its KLI type and includes sense-making framing where needed (Rulebook Sections 3-4)
-- The starting mental model and skill gap are explicitly stated (Rulebook Section 4)
+- Learning objectives are specific and measurable (5-8 total) (Rulebook Section 1)
+- Structure follows builder-badge template: 3-5 numbered stages with Goal, Learner tasks, Milestone check
+- Each stage has exploration/sense-making context before learner tasks (Rulebook Section 4)
+- Learner tasks are specific, actionable steps (not abstract concepts)
 - Scaffolding is appropriate for each stage — full for new knowledge, reduced for prior knowledge (Rulebook Section 6)
-- Every stage ends with a milestone check described in plain terms (Rulebook Section 7)
-- At least one stage captures a written reflection or design decision (Rulebook Section 10)
+- Every stage ends with an observable milestone check described in plain terms (Rulebook Section 7)
+- At least one stage captures written reflection or decision documentation (Rulebook Section 10)
 - The outline is complete enough that `/lab-outline-converter` can produce a full spec without asking clarifying questions
 - 3-5 stages total, each scoped to 15-30 minutes
