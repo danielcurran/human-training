@@ -2,11 +2,11 @@
 
 This directory contains research, design thinking, and facilitator guidance.
 
-## Contents
+## Planned Contents
 
-- **[learner-feedback.md](learner-feedback.md)** — Summary of feedback from humans who've run labs (coming soon)
-- **[facilitator-guide.md](facilitator-guide.md)** — How to run these labs in different contexts: classroom, bootcamp, async self-paced (coming soon)
-- **[research-notes.md](research-notes.md)** — Learning science research, MongoDB pedagogy thinking, iteration notes (coming soon)
+- **learner-feedback.md** — Summary of feedback from humans who've run labs
+- **facilitator-guide.md** — How to run these labs in different contexts: classroom, bootcamp, async self-paced
+- **research-notes.md** — Learning science research, pedagogy thinking, iteration notes
 
 ## How This Repo Learns
 

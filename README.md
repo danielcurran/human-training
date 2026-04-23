@@ -10,6 +10,7 @@ This repository is the counterpart to [`agent-training`](https://github.com/dani
 
 | Directory | Purpose |
 |---|---|
+| `agents/` | AI agents that automate the lab design and build workflow |
 | `standards/` | Instructional design principles and rubrics for human-centered MongoDB education |
 | `skills/` | Reusable domain knowledge modules (teaching strategies, patterns, etc.) |
 | `labs/` | Lab outlines, technical specs, and evaluation reports |
@@ -20,19 +21,19 @@ This repository is the counterpart to [`agent-training`](https://github.com/dani
 
 | Lab | Status | Difficulty |
 |---|---|---|
-| [Builder Badge](labs/specs/builder-badge-tech-spec.md) | ✓ Stable | Intermediate |
-| [Insert and Find](labs/specs/insert-and-find-tech-spec.md) | ✓ Stable | Beginner |
+| [Builder Badge](labs/outlines/builder-badge) | Outline | Intermediate |
 | (Your next lab here) | — | — |
 
 ## Workflow
 
+Labs are created using a 5-agent pipeline (see [agents/AGENTS.md](agents/AGENTS.md)):
+
 ```
-1. Design outline (instructor)
-2. Write technical spec (instructor)
-3. Get feedback (peer review, learner testing)
-4. Build lab environment
-5. Iterate on feedback from learners
-6. Publish
+1. /lab-outline-designer     — Design high-level outline
+2. /lab-outline-converter     — Convert outline → technical spec
+3. /lab-instruction-evaluator — Validate spec (gate: ≥8/10)
+4. /lab-environment-builder   — Build lab environment
+5. /lab-instructional-qa-reviewer — QA review for learner experience
 ```
 
 ## Getting Started
@@ -44,7 +45,7 @@ Read [standards/README.md](standards/README.md) for pedagogical principles and t
 Each lab has a `README.md` in its `lab-test-env/{lab-name}/` folder with setup and execution instructions.
 
 ### For Facilitators
-See `docs/facilitator-guide.md` (coming soon) for guidance on running these labs in classroom, bootcamp, or self-paced contexts.
+See `docs/` for guidance on running these labs in classroom, bootcamp, or self-paced contexts.
 
 ## Differences from `agent-training`
 

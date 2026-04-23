@@ -30,7 +30,7 @@ Generate the `lab-test-env/[lab-name]/` folder containing:
 
 - The **validated** tech spec to build from (attach with `#file`)
 - Lab name (used as the folder name — use kebab-case)
-- **Verification**: The spec must have passed evaluation with scores ≥ 8/10 (Spec Quality AND Learner Experience). If either score is below 8, STOP.
+- **Verification**: The spec must have passed evaluation with scores ≥ 8/10 (Spec Quality AND Resulting Lab Quality). If either score is below 8, STOP.
 
 ---
 
@@ -42,19 +42,19 @@ Generate the `lab-test-env/[lab-name]/` folder containing:
 
 Check that:
 - Spec Quality score ≥ 8/10 ✓
-- Learner Experience score ≥ 8/10 ✓
+- Resulting Lab Quality score ≥ 8/10 ✓
 
 If either score is below 8, respond:
 
 ```
 This spec's evaluation scores do not meet the gate threshold:
 - Spec Quality: [score]/10
-- Learner Experience: [score]/10
+- Resulting Lab Quality: [score]/10
 
 Both scores must be ≥ 8/10 before building an environment.
 
 Please revise the spec addressing the feedback in the evaluation report, then
-re-run `/evaluate-lab-instructions` and share the updated report.
+re-run `/lab-instruction-evaluator` and share the updated report.
 ```
 
 If scores pass, proceed to Behavior 1.

@@ -10,13 +10,15 @@ Type `/` in the chat and select:
 2. **`/lab-outline-converter`** — Convert outline → detailed technical spec
 3. **`/lab-instruction-evaluator`** — Validate spec quality (gate: must score ≥8/10)
 4. **`/lab-environment-builder`** — Generate working lab environment
+5. **`/lab-instructional-qa-reviewer`** — Review built lab for instructional gaps and UX
 
 ## Agent Files
 
 - `lab-outline-designer.md` — Designs lab outlines with learning objectives and stage structure
 - `lab-outline-converter.md` — Expands outlines into full technical specifications
-- `lab-instruction-evaluator.md` — Three-pass evaluation (section-by-section, full-spec, learner experience)
+- `lab-instruction-evaluator.md` — Three-pass evaluation (section-by-section, full-spec, resulting lab quality)
 - `lab-environment-builder.md` — Generates Docker services, seed scripts, and check scripts
+- `lab-instructional-qa-reviewer.md` — Reviews built labs for instructional completeness and learner UX
 - `AGENTS.md` — Master index and workflow documentation
 
 ## Source of Truth
@@ -26,12 +28,12 @@ All agents consult the **[Instructional Design Rulebook](../standards/instructio
 ## Workflow
 
 ```
-Lab Outline          Technical Spec         Evaluation Report      Lab Environment
-(High-level)         (Detailed)             (Quality assurance)    (Ready to run)
+Lab Outline          Technical Spec         Evaluation Report      Lab Environment        QA Review
+(High-level)         (Detailed)             (Quality assurance)    (Ready to run)         (Learner polish)
      
-outline.md ------>  tech-spec.md ------>  eval-report.md ------> lab-test-env/
-     ↓                   ↓                      ↓                      ↓
-designer          converter              evaluator              builder
+outline.md ------>  tech-spec.md ------>  eval-report.md ------> lab-test-env/ -------> qa-review.md
+     ↓                   ↓                      ↓                      ↓                      ↓
+designer          converter              evaluator              builder              qa-reviewer
 ```
 
 ## Key Concepts

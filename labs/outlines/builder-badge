@@ -24,11 +24,11 @@
   * [**MongoDB Schema Design**](https://github.com/mongodb/agent-skills/tree/main/skills/mongodb-schema-design) suggests how to group data into MongoDB documents.  
   * **Test Suite Runner** runs the canonical test command, interprets results, and suggests next steps when tests fail.  
   * **Baseline Flow Checker** walks a short end to end scenario and verifies baseline state in the SQL database.  
-  * **Mongo Explorer** helps you inspectinsxfpect the equivalent data and schema in MongoDB.  
+  * **Mongo Explorer** helps you inspect the equivalent data and schema in MongoDB.  
   * [**MongoDB Query Optimizer**](https://github.com/mongodb/agent-skills/tree/main/skills/mongodb-query-optimizer) and **AI Integrator** support later steps for optimizing queries and adding vector search.  
 * Learners work in a single long-running challenge with discrete, validated milestones.
 
-## Lab Walkthough 
+## Lab Walkthrough 
 
 1. ## Design and refine the MongoDB data model
 
@@ -44,7 +44,7 @@
 * Learner tasks:  
   * Ask [**MongoDB Schema Design**](https://github.com/mongodb/agent-skills/tree/main/skills/mongodb-schema-design) to propose at least two alternative MongoDB schemas (for example, more embedded, more normalized, hybrid), each with a brief pros and cons summary.  
   * Choose one option (or define a hybrid) and capture it in code (YAML or JSON schema design file).  
-  * In SCHEMA\_NOTES.md, write a brief reflection covering:  
+  * In SCHEMA_NOTES.md, write a brief reflection covering:  
 * Which option you chose and why.  
 * Which read and write patterns drove that decision.  
 * What you would worry about if you had to change this design in six months.  
@@ -63,14 +63,14 @@
   * For each core path (simple reads, writes and updates, and any previously joined queries), ask [**MongoDB Query Optimizer**](https://github.com/mongodb/agent-skills/tree/main/skills/mongodb-query-optimizer) for at least two implementation options.  
   * Select one option per path (or define a hybrid) and implement it in the data access layer.  
   * Run the test suite via **Test Suite Runner** after each major refactor and adjust implementations as needed.  
-  * In DAL\_NOTES.md, record:  
-    * Which option you chose for each core path.  
-    * Why you chose it (for example, simpler queries, fewer round trips, easier future changes).  
+* In DAL_NOTES.md, record:  
+    * Which option you chose for each core path.
+    * Why you chose it (for example, simpler queries, fewer round trips, easier future changes).
     * One tradeoff you are accepting (for example, more write amplification or more complex aggregation).  
 * Milestone check:  
   * All unit tests that exercise migrated paths pass against MongoDB.  
   * Diff-based check ensures no lingering SQL client usage in the core app path.  
-  * DAL\_NOTES.md exists and contains a brief justification for the chosen implementations.
+  * DAL_NOTES.md exists and contains a brief justification for the chosen implementations.
 
 
 3. ## Implement vector search and AI assistance

@@ -2,15 +2,19 @@
 
 ## Code of Conduct
 
-We're committed to providing a welcoming and inspiring community for all. Read our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) (coming soon).
+We're committed to providing a welcoming and inspiring community for all.
 
 ## Ways to Contribute
 
 ### 1. Design a New Lab
-- Start with [standards/lab-design-template.md](standards/lab-design-template.md)
-- Submit a pull request with your lab outline
+- Use the agent pipeline to create labs (see [agents/AGENTS.md](agents/AGENTS.md)):
+  1. `/lab-outline-designer` — Create outline from topic
+  2. `/lab-outline-converter` — Convert to technical spec
+  3. `/lab-instruction-evaluator` — Validate spec (gate: ≥8/10)
+  4. `/lab-environment-builder` — Build the environment
+  5. `/lab-instructional-qa-reviewer` — QA review for learner experience
+- Submit a pull request with your lab artifacts
 - We'll review and provide feedback
-- Build the environment and iterate with learner feedback
 
 ### 2. Test an Existing Lab
 - Pick a lab from `lab-test-env/`

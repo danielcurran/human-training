@@ -21,6 +21,8 @@ The lab creation workflow follows this sequence:
 /lab-instruction-evaluator
         ↓
 /lab-environment-builder
+        ↓
+/lab-instructional-qa-reviewer
 ```
 
 ---
@@ -84,7 +86,7 @@ Validates lab specs for quality, clarity, and learner effectiveness using a thre
 
 **Inputs:** Lab tech spec (file)
 **Output:** Evaluation report saved to `labs/reports/[lab-name]-tech-spec-eval-v[N].md`
-**Gate:** Spec must score ≥8/10 on both Spec Quality and Learner Experience
+**Gate:** Spec must score ≥8/10 on both Spec Quality and Resulting Lab Quality
 **Next step:** If passing, run `/lab-environment-builder`; otherwise, revise spec
 
 ---
@@ -106,6 +108,31 @@ Generates working test environments from validated tech specs.
 **Inputs:** Validated tech spec (must have evaluation scores ≥8/10), lab name
 **Output:** Complete environment in `lab-test-env/[lab-name]/`
 **Success:** `npm install && npm run seed && npm run check:all` works without errors
+
+---
+
+### 5. Lab Instructional QA Reviewer
+**Slash command:** `/lab-instructional-qa-reviewer`
+
+**File:** [lab-instructional-qa-reviewer.md](lab-instructional-qa-reviewer.md)
+
+Reviews completed lab environments for instructional gaps, QA issues, and learner UX—focusing on the actual learner experience in the built lab.
+
+**Source of truth:** [Instructional Design Rulebook](../standards/instructional-design-rulebook.md) — Uses Sections 1 (prerequisites), 6 (scaffolding), 7 (milestone clarity), 8 (learner voice)
+
+**Scope:** Narrow and focused—assesses the final lab from a learner's perspective, not a builder evaluation. Checks clarity, scaffolding, pacing, accuracy, typos, navigation, and polish.
+
+**Use when:**
+- Validating the lab is ready for learners
+- Finding instructional gaps or confusing sections
+- Identifying typos, formatting issues, or broken references
+- Improving UX and navigation
+- Checking stage-by-stage completability
+
+**Inputs:** Built lab environment (from `/lab-environment-builder`)
+**Output:** QA Review report saved to `labs/reports/[lab-name]-instructional-qa-review-v[N].md`
+**Gate:** Ready for release / Minor fixes needed / Major revisions needed
+**Next step:** If major revisions needed, feed back to spec or builder; otherwise, lab is ready for learners
 
 ---
 

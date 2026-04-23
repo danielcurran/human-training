@@ -28,7 +28,7 @@ labs/
 
 | Lab | Outline | Spec | Status |
 |---|---|---|---|
-| (Coming soon) | — | — | — |
+| Builder Badge | [outline](outlines/builder-badge) | — | Outline complete |
 
 ---
 

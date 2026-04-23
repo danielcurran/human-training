@@ -461,6 +461,6 @@ A stage assumes learners will know concept X from external reading, but doesn't 
 3. **When writing a technical spec**: Use Sections 5-13 to ensure completeness
 4. **When evaluating a lab**: Score against Section 12 criteria
 5. **When building an environment**: Use Section 11 checklist
-6. **When debugging learner confusion**: Check Section 9 (terminology) and Section 10 (mental models)
+6. **When debugging learner confusion**: Check Section 9 (terminology) and Section 4 (mental models)
 
 **Foundation principles:** Always ground your work in Section 0.1 (**Humans Interpret, Agents Plan** — unambiguous, actionable instruction) and Section 0.2 (**Backwards Design** — end goal first, then work backwards). If a section is ambiguous, refer back to these principles rather than assuming.
