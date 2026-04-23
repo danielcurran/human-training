@@ -1,0 +1,241 @@
+---
+name: lab-agents
+description: Index of all lab creation agents for building human learner training labs
+---
+
+# Lab Creation Agents
+
+This directory contains specialized agents for creating, validating, and building technical training labs optimized for human learners in VS Code.
+
+## Workflow Overview
+
+The lab creation workflow follows this sequence:
+
+```
+Lab Outline Designer
+        ↓
+Lab Outline Converter
+        ↓
+Lab Instruction Evaluator
+        ↓
+Lab Environment Builder
+```
+
+---
+
+## Agents
+
+### 1. Lab Outline Designer
+**File:** [lab-outline-designer.md](lab-outline-designer.md)
+
+Creates high-level lab outlines from a topic and learning objectives.
+
+**Use when:**
+- Designing a new training lab from scratch
+- Planning what concepts to teach
+- Scoping stage-by-stage activities
+- Defining learner goals and milestones
+
+**Inputs:** Topic, target audience, environment, constraints
+**Output:** Lab outline saved to `labs/outlines/[lab-name]-outline.md`
+**Next step:** Run Lab Outline Converter
+
+---
+
+### 2. Lab Outline Converter
+**File:** [lab-outline-converter.md](lab-outline-converter.md)
+
+Converts high-level outlines into detailed technical specifications.
+
+**Use when:**
+- You have a lab outline and need the full spec
+- Expanding outlines into step-by-step instructions
+- Defining all environment requirements and seed data
+
+**Inputs:** Lab outline (file), target task, audience, platform
+**Output:** Tech spec saved to `labs/specs/[lab-name]-tech-spec.md`
+**Next step:** Run Lab Instruction Evaluator
+
+---
+
+### 3. Lab Instruction Evaluator
+**File:** [lab-instruction-evaluator.md](lab-instruction-evaluator.md)
+
+Validates lab specs for quality, clarity, and learner effectiveness using a three-pass approach.
+
+**Use when:**
+- Validating a spec before building the environment
+- Getting feedback on spec quality
+- Identifying gaps in instructions or learner experience
+
+**Inputs:** Lab tech spec (file)
+**Output:** Evaluation report saved to `labs/reports/[lab-name]-tech-spec-eval-v[N].md`
+**Gate:** Spec must score ≥8/10 on both Spec Quality and Learner Experience
+**Next step:** If passing, run Lab Environment Builder; otherwise, revise spec
+
+---
+
+### 4. Lab Environment Builder
+**File:** [lab-environment-builder.md](lab-environment-builder.md)
+
+Generates working test environments from validated tech specs.
+
+**Use when:**
+- Building the lab skeleton and tooling
+- Setting up Docker services and seed data
+- Creating check scripts for milestone validation
+
+**Inputs:** Validated tech spec (must have evaluation scores ≥8/10), lab name
+**Output:** Complete environment in `lab-test-env/[lab-name]/`
+**Success:** `npm install && npm run seed && npm run check:all` works without errors
+
+---
+
+## Supporting Documentation
+
+### Instructional Design Rulebook
+**File:** [standards/instructional-design-rulebook.md](../../standards/instructional-design-rulebook.md)
+
+The foundation for all lab creation. Defines:
+- Learning objectives and stage design
+- Scaffolding and KLI types
+- Terminology standards
+- Evaluation criteria
+
+**Read this first.** All agents reference it.
+
+---
+
+## Lab Directory Structure
+
+Labs are organized as follows:
+
+```
+labs/
+├── outlines/
+│   └── [lab-name]-outline.md           # High-level plan
+├── specs/
+│   └── [lab-name]-tech-spec.md         # Detailed specification
+└── reports/
+    └── [lab-name]-tech-spec-eval-v1.md # Evaluation report
+
+lab-test-env/
+└── [lab-name]/                         # Built environment
+    ├── .env.example
+    ├── docker-compose.yml
+    ├── package.json
+    ├── README.md
+    ├── lib/
+    ├── src/
+    └── scripts/
+        ├── seed.js
+        ├── reset.js
+        ├── check-env.js
+        └── check-[stage-name].js (one per stage)
+```
+
+---
+
+## Quick Start Example
+
+### Step 1: Design the Outline
+
+```
+/lab-outline-designer
+
+Topic: Learning to build REST APIs
+Audience: JavaScript developers new to Express
+Environment: Local VS Code
+```
+
+Output: `labs/outlines/rest-api-outline.md`
+
+### Step 2: Convert to Spec
+
+```
+/lab-outline-converter #file labs/outlines/rest-api-outline.md
+```
+
+Output: `labs/specs/rest-api-tech-spec.md`
+
+### Step 3: Evaluate
+
+```
+/lab-instruction-evaluator #file labs/specs/rest-api-tech-spec.md
+```
+
+Output: `labs/reports/rest-api-tech-spec-eval-v1.md`
+
+Check: Both scores ≥ 8/10? If yes, proceed to Step 4.
+
+### Step 4: Build Environment
+
+```
+/lab-environment-builder #file labs/specs/rest-api-tech-spec.md
+Lab name: rest-api
+```
+
+Output: `lab-test-env/rest-api/` ready to run
+
+### Verify
+
+```bash
+cd lab-test-env/rest-api
+npm install
+docker-compose up -d
+npm run seed
+npm run check:all
+```
+
+---
+
+## Principles
+
+### Human Interpretation First
+Every lab is written so that a learner can understand what they are being asked to do **without ambiguity**. All agents follow this principle from Section 0 of the Instructional Design Rulebook.
+
+### Zero Prior Knowledge
+All labs assume learners have no domain knowledge. Every concept is defined on first use.
+
+### Testable Success
+Every stage has a concrete milestone check. Learners know exactly what success looks like.
+
+### Graceful Failure
+Labs anticipate where learners will get stuck and provide recovery paths. Maximum 3 attempts before fallback.
+
+---
+
+## Examples
+
+See these directories for reference lab specifications and environments:
+
+- `labs/specs/` — Reference technical specifications
+- `lab-test-env/` — Built lab environments ready to run
+
+---
+
+## Troubleshooting
+
+### Agent doesn't seem to apply?
+Make sure the `description` field in the agent's frontmatter includes the keywords from your request. The system uses `description` to decide which agent to invoke.
+
+### Agent is missing features?
+Check the [Instructional Design Rulebook](../../standards/instructional-design-rulebook.md) for the authoritative standard. All agents implement it.
+
+### Lab environment won't start?
+1. Ensure Docker Desktop is running
+2. Check `.env` exists and has correct `DATABASE_URL`
+3. Run `docker-compose logs` to see service output
+4. Verify ports 27017, 3000, 5432 (etc.) are not already in use
+
+---
+
+## Contact & Feedback
+
+These agents implement the [Instructional Design Rulebook](../../standards/instructional-design-rulebook.md). 
+
+For questions or improvements:
+1. Check the rulebook first
+2. Consult the specific agent definition
+3. Run the evaluation agent on any lab you're uncertain about
+
