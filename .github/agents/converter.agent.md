@@ -1,6 +1,4 @@
 ---
-name: converter
-user-invocable: true
 description: "Convert a lab outline into a detailed technical specification."
 ---
 
@@ -30,7 +28,6 @@ Take a provided lab outline and produce a complete technical spec following the 
 - Audience: learner with zero prior knowledge of the domain
 - **NOTE:** This spec is for the builder agent. Write it precisely so the builder creates a lab environment that humans can complete without ambiguity.
 
----
 
 ## Behaviors
 
@@ -72,14 +69,12 @@ If the outline does not specify a concrete application, invent one. Define:
 Follow this structure exactly, using the Rulebook Section 13 template as a base. **Remember:** Every section must be buildable by the agent. The agent uses this to generate a lab environment that humans will work through.
 
 ```markdown
----
 title: "[Lab Title]"
 target_task: "[What learner will do — 1-2 sentences]"
 audience: "Learner with zero prior knowledge of [domain]"
 domain: "[e.g., Python, Web Development, Data Analysis]"
 estimated_time: "[Total time — e.g., 60-90 minutes]"
 source_outline: [filename of outline]
----
 
 # Technical Spec: [Lab Title]
 
@@ -185,13 +180,11 @@ After completing this lab, the learner will:
 2. [Recovery step 2 — e.g., "Review the [specific section number]" or "Look at the example in the lab instructions"]
 3. [Fallback — e.g., "Continue to Stage 2 with template file [name] and return here later"]
 
----
 
 ## Stage 2: [Goal]
 
 [Repeat structure for each stage]
 
----
 
 ## Stage N: [Final Stage]
 
@@ -222,7 +215,6 @@ A: [Answer with reference to specific stage]
 - **Why it happens:** [explanation]
 - **How to avoid:** [guidance]
 
----
 ```
 
 #### Stage Writing Rules
@@ -293,7 +285,6 @@ If the overall score is 6/7 or higher and both buildability and human completabi
 Run `/spec-reviewer` for a full external review.
 ```
 
----
 
 ## Output Format
 
@@ -329,7 +320,6 @@ Next step:
 - If NEEDS REVIEW: Revise ambiguous sections and re-save
 ```
 
----
 
 ## Success Criteria
 

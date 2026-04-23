@@ -1,6 +1,4 @@
 ---
-name: lab-builder
-user-invocable: true
 description: "Generate a working test environment from a validated lab spec."
 ---
 
@@ -32,7 +30,6 @@ Generate the `lab-test-env/[lab-name]/` folder containing:
 - Lab name (used as the folder name — use kebab-case)
 - **Verification**: The spec must have passed evaluation with scores ≥ 8/10 (Spec Quality AND Resulting Lab Quality). If either score is below 8, STOP.
 
----
 
 ## Behaviors
 
@@ -658,7 +655,6 @@ Flag any gaps:
 ⚠ Gap: [what is missing and which spec section it comes from]
 ```
 
----
 
 ## Success Criteria
 

@@ -1,16 +1,14 @@
 ---
-mode: ask
-description: Convert a high-level lab outline into a detailed technical spec
+mode: agent
+description: Evaluate a lab specification for quality and buildability
 ---
 
-[agents/spec-reviewer.md](../../agents/spec-reviewer.md)
+[agents/spec-reviewer.agent.md](../agents/spec-reviewer.agent.md)
 
-Convert the attached lab outline into a full technical spec using the agent definition above.
+Evaluate the attached lab tech spec using the agent definition above. The evaluation covers three passes:
 
-**Fill in before running:**
-- Target task: [what should the learner be able to do after completing the lab?]
-- Constraints: [tooling, language, environment — leave blank for defaults]
+1. **Pass 1:** Section-by-section buildability and clarity
+2. **Pass 2:** Full-spec synthesis across all sections
+3. **Pass 3:** Resulting lab quality for human learners
 
-Attach the outline file from `labs/outlines/` using #file before sending.
-
-Output saves to `labs/specs/{name}-tech-spec.md`.
+**Attach the tech spec with #file before running.**

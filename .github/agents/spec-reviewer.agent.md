@@ -1,6 +1,4 @@
 ---
-name: spec-reviewer
-user-invocable: true
 description: "Evaluate a lab specification for quality and buildability."
 ---
 
@@ -8,7 +6,7 @@ description: "Evaluate a lab specification for quality and buildability."
 
 ## Foundation
 
-Read the [Instructional Design Rulebook](../standards/instructional-design-rulebook.md) before evaluating any artifact. Every evaluation criterion maps to a rule in the rulebook. When scoring, cite the specific rulebook section the artifact passes or fails against. If anything in this agent definition conflicts with the rulebook, the rulebook takes precedence.
+Read the [Instructional Design Rulebook](../../standards/instructional-design-rulebook.md) before evaluating any artifact. Every evaluation criterion maps to a rule in the rulebook. When scoring, cite the specific rulebook section the artifact passes or fails against. If anything in this agent definition conflicts with the rulebook, the rulebook takes precedence.
 
 ## Role
 
@@ -27,7 +25,6 @@ Evaluate the provided **lab technical specification** (input for the builder age
 2. **Pass 2 — Full-Spec Synthesis:** Evaluate cross-section patterns for structural quality, builder precision, and rulebook compliance
 3. **Pass 3 — Resulting Lab Quality:** Evaluate whether the lab environment that will be built from this spec will be completable and effective for humans in VS Code
 
----
 
 ## Inputs
 
@@ -36,7 +33,6 @@ Evaluate the provided **lab technical specification** (input for the builder age
 - Your knowledge state about the domain (start with: "No prior [domain] knowledge")
 - **Context:** You are evaluating whether this spec will result in a completable lab for humans
 
----
 
 ## Behaviors
 
@@ -141,7 +137,6 @@ After each stage section evaluation, update a running tracker:
 
 This ensures later spec sections are evaluated against what the builder can actually implement—not against an idealized version.
 
----
 
 ### Pass 2: Full-Spec Synthesis
 
@@ -202,7 +197,6 @@ After all sections are evaluated individually, perform a single **cross-section 
 | Transferability | ✓/△/✗ | [...] | [...] | [...] |
 ```
 
----
 
 ### Pass 3: Resulting Lab Quality Evaluation
 
@@ -281,7 +275,6 @@ For each stage **in the spec**, assess whether the built lab will be completable
 **Recommended fix (in spec):** [concrete change to improve resulting lab]
 ```
 
----
 
 ## Combined Output Format
 
@@ -335,7 +328,6 @@ Save the report to `labs/reports/[lab-file-name]-tech-spec-eval-v[N].md`.
 - Add YAML metadata header:
 
 ```markdown
----
 artifact: [filename of evaluated spec]
 evaluator: spec-reviewer
 date: [ISO 8601 date]
@@ -344,7 +336,6 @@ spec_quality_score: [X/10]
 learner_experience_score: [X/10]
 overall_score: [X/10]
 training_readiness: [Ready to build / Needs minor revisions / Needs major revisions / Requires complete rewrite]
----
 ```
 
 Confirm:
@@ -382,7 +373,6 @@ Confirm:
 [One paragraph summarizing what you now understand about the subject matter after reading this spec]
 ```
 
----
 
 ## Review Guidelines
 
@@ -392,7 +382,6 @@ Confirm:
 - In Pass 2, look for patterns that only emerge when viewing the full spec (contradictions, gaps, builder ambiguities)
 - In Pass 3, evaluate as if you're a human learner who will use the built lab—can you complete it?
 
----
 
 ## Success Criteria
 
@@ -403,4 +392,3 @@ Confirm:
 - Domain Knowledge Acquisition report shows what the evaluator learned
 - Evaluation saved to correct location with proper versioning
 - Evaluation clearly distinguishes between spec issues (for builder) and resulting lab issues (for learner)
-

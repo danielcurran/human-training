@@ -1,8 +1,3 @@
----
-name: lab-agents
-description: Index of all lab creation agents for building human learner training labs
----
-
 # Lab Creation Agents
 
 This directory contains specialized agents for creating, validating, and building technical training labs optimized for human learners in VS Code.
@@ -32,7 +27,7 @@ The lab creation workflow follows this sequence:
 ### 1. Outline Builder
 **Slash command:** `/outline-builder`
 
-**File:** [outline-builder.md](outline-builder.md)
+**File:** [outline-builder.md](../.github/agents/outline-builder.md)
 
 Design a lab outline from learning objectives and concept scope.
 
@@ -53,7 +48,7 @@ Design a lab outline from learning objectives and concept scope.
 ### 2. Converter
 **Slash command:** `/converter`
 
-**File:** [converter.md](converter.md)
+**File:** [converter.md](../.github/agents/converter.md)
 
 Convert a lab outline into a detailed technical specification.
 
@@ -73,7 +68,7 @@ Convert a lab outline into a detailed technical specification.
 ### 3. Spec Reviewer
 **Slash command:** `/spec-reviewer`
 
-**File:** [spec-reviewer.md](spec-reviewer.md)
+**File:** [spec-reviewer.md](../.github/agents/spec-reviewer.md)
 
 Evaluate a lab specification for quality and buildability.
 
@@ -94,7 +89,7 @@ Evaluate a lab specification for quality and buildability.
 ### 4. Lab Builder
 **Slash command:** `/lab-builder`
 
-**File:** [lab-builder.md](lab-builder.md)
+**File:** [lab-builder.md](../.github/agents/lab-builder.md)
 
 Generate a working test environment from a validated lab spec.
 
@@ -114,7 +109,7 @@ Generate a working test environment from a validated lab spec.
 ### 5. QA Review
 **Slash command:** `/qa-review`
 
-**File:** [qa-review.md](qa-review.md)
+**File:** [qa-review.md](../.github/agents/qa-review.md)
 
 Review a built lab for instructional completeness and learner UX—focusing on the actual learner experience.
 

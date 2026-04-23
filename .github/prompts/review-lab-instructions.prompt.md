@@ -1,19 +1,14 @@
 ---
 mode: agent
-description: Review a completed lab environment for instructional gaps, QA issues, and learner UX
+description: Review a built lab for instructional completeness and learner UX
 ---
 
-[agents/qa-review.md](../../agents/qa-review.md)
+[agents/qa-review.agent.md](../agents/qa-review.agent.md)
 
-Review the built lab environment using the agent definition above.
+Review the built lab environment using the agent definition above. The review covers three passes:
 
-**Prerequisites:**
-- The lab environment must have been built by /build-lab-environment
-- The lab should be functional (Docker services running, check scripts passing)
+1. **Pass 1:** Stage-by-stage walkthrough from learner perspective
+2. **Pass 2:** Cross-stage coherence and lab flow
+3. **Pass 3:** UX and polish (wording, formatting, navigation, consistency)
 
-**Fill in before running:**
-- Lab name: [kebab-case name matching the folder in lab-test-env/]
-
-Attach relevant lab files (README.md, stage instructions) using #file before sending.
-
-Output saves to `labs/reports/{lab-name}-instructional-qa-review-v{N}.md`.
+**Point to the built lab folder (e.g., lab-test-env/[lab-name]/) before running.**

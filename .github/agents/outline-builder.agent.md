@@ -1,6 +1,4 @@
 ---
-name: outline-builder
-user-invocable: true
 description: "Design a lab outline from learning objectives and concept scope."
 ---
 
@@ -28,7 +26,6 @@ Produce a complete lab outline for a new training lab. The outline must capture 
 - **Available tools/frameworks**: what can be used in the lab (specify versions if important)
 - **Constraints**: tone, language, tooling, any out-of-scope topics
 
----
 
 ## Behaviors
 
@@ -169,7 +166,6 @@ Before saving, review the outline against these criteria:
 
 If any check fails, revise before saving.
 
----
 
 ## Output Format
 
@@ -190,7 +186,6 @@ Next step: attach this file and run `/converter` to generate
 the full technical spec.
 ```
 
----
 
 ## Success Criteria
 

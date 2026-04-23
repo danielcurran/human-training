@@ -1,6 +1,4 @@
 ---
-name: qa-review
-user-invocable: true
 description: "Review a built lab for instructional completeness and learner UX."
 ---
 
@@ -8,7 +6,7 @@ description: "Review a built lab for instructional completeness and learner UX."
 
 ## Foundation
 
-Read the [Instructional Design Rulebook](../standards/instructional-design-rulebook.md) before reviewing any lab. This agent operates on the **built lab** (the actual environment learners will use), not the technical specification. Focus on practical instructional completeness and learner experience—not builder implementation details.
+Read the [Instructional Design Rulebook](../../standards/instructional-design-rulebook.md) before reviewing any lab. This agent operates on the **built lab** (the actual environment learners will use), not the technical specification. Focus on practical instructional completeness and learner experience—not builder implementation details.
 
 ## Role
 
@@ -29,7 +27,6 @@ Review the provided **built lab environment** (Docker services, VS Code workspac
 
 Output a structured review report with specific, actionable recommendations for fixes.
 
----
 
 ## Inputs
 
@@ -38,7 +35,6 @@ You receive:
 - Context: Lab was built from a technical spec that was already evaluated for builder precision
 - Your task: Assess the **actual learner experience** in this built lab
 
----
 
 ## Pass 1: Stage-by-Stage Walkthrough (Learner Perspective)
 
@@ -135,7 +131,6 @@ For each stage in the lab, step through as if you're a learner encountering it f
 | 2 | [...] | [...] | [...] | [...] | [...] | [...] |
 ```
 
----
 
 ## Pass 2: Cross-Stage Coherence (Lab Flow)
 
@@ -200,7 +195,6 @@ Now step back and assess the lab as a whole:
 - **Rewrites Needed:** [Specific text improvements]
 ```
 
----
 
 ## Pass 3: UX and Polish (Learner Interface)
 
@@ -321,7 +315,6 @@ Now do a detailed polish pass:
 - [Next inconsistency] ...
 ```
 
----
 
 ## Combined Output Format
 
@@ -371,7 +364,6 @@ Now do a detailed polish pass:
 #### Consistency
 - [Issue 1]
 
----
 
 ## Priority Action Items
 
@@ -389,7 +381,6 @@ Prioritize by impact on learner:
 4. **Low Priority** (polish):
    - [Tone issue / minor wording improvement]
 
----
 
 ## QA Checklist
 
@@ -407,7 +398,6 @@ Use this checklist to ensure comprehensive review:
 - ✓ Confirmed learner can understand without external help
 - ✓ Assessed scaffolding adequacy for each stage
 
----
 
 ## Output Report Template
 
@@ -419,7 +409,6 @@ Save the review report to `labs/reports/[lab-name]-instructional-qa-review-v[N].
 - Add YAML metadata header:
 
 ```markdown
----
 artifact: [name of lab reviewed]
 reviewer: qa-review
 date: [ISO 8601 date]
@@ -427,7 +416,6 @@ version: v[N]
 qa_status: [Ready for release / Minor fixes needed / Major revisions needed]
 blocker_count: [number of blockers]
 high_priority_count: [number of high priority issues]
----
 ```
 
 Confirm:
@@ -436,7 +424,6 @@ Confirm:
 ✓ QA Review saved to labs/reports/[lab-name]-instructional-qa-review-v[N].md
 ```
 
----
 
 ## Review Guidelines
 
@@ -448,7 +435,6 @@ Confirm:
 - **Testing:** If possible, actually test commands and file paths in the built environment
 - **Validation:** Cross-check that check scripts align with instructions (they should validate what the instruction asked for)
 
----
 
 ## Success Criteria
 

@@ -1,19 +1,12 @@
 ---
 mode: agent
-description: Generate a working lab environment from a validated tech spec
+description: Generate a working test environment from a validated lab spec
 ---
 
-[agents/lab-builder.md](../../agents/lab-builder.md)
+[agents/lab-builder.agent.md](../agents/lab-builder.agent.md)
 
 Build the test environment using the agent definition above.
 
-**Prerequisites:**
-- The tech spec must have passed evaluation with BOTH Spec Quality ≥ 8/10 AND Resulting Lab Quality ≥ 8/10
-- If not, iterate the spec first by running /evaluate-lab-instructions
+**Attach the validated tech spec with #file before running.**
 
-**Fill in before running:**
-- Lab name: [kebab-case name for the output folder]
-
-Attach the tech spec from `labs/specs/` using #file before sending.
-
-Output saves to `lab-test-env/[lab-name]/`.
+The spec must have passed evaluation with scores ≥ 8/10 on both Spec Quality and Resulting Lab Quality.
