@@ -11,9 +11,9 @@ This rulebook defines principles for creating effective, learner-centered traini
 
 ---
 
-## Section 0: Foundation Principle
+## Section 0: Foundation Principles
 
-**Humans Interpret, Agents Plan**
+### 0.1: Humans Interpret, Agents Plan
 
 Lab specifications must be written so that a learner with zero prior knowledge can:
 1. Understand what they are being asked to do
@@ -22,6 +22,33 @@ Lab specifications must be written so that a learner with zero prior knowledge c
 4. Recover from mistakes without re-reading the entire specification
 
 Every section, stage, and check command must prioritize **unambiguous, actionable instruction** over conceptual completeness. If a choice exists between comprehensive explanation and crystal-clear direction, choose clarity.
+
+---
+
+### 0.2: Backwards Design
+
+All labs must be designed using **backwards design** — a foundational approach that starts with the end goal and works backwards to design learning experiences.
+
+**The backwards design process:**
+
+1. **Start with the target task** — Define precisely what the learner will be able to do after completing the lab (see Section 1)
+2. **Define success criteria** — Specify the exact behaviors, artifacts, or outputs that demonstrate the learner has achieved the target task (see Section 7 for milestone checks)
+3. **Design learning experiences** — Work backwards from success criteria to identify what stages, concepts, and scaffolding are needed for the learner to reach that goal (see Sections 2-6)
+4. **Build the environment** — Create the minimal working environment that supports the planned learning experiences without adding unnecessary complexity
+
+**Why backwards design matters:**
+
+- **Prevents scope creep** — Concepts or activities that don't directly support the target task are excluded
+- **Ensures alignment** — Every stage, concept, and milestone check is justified by the end goal
+- **Clarifies prerequisites** — Working backwards reveals what knowledge must come before what
+- **Improves testability** — Success criteria are defined before the lab is built, making evaluation unambiguous
+
+**Key backward design principle:** If a concept doesn't directly enable the learner to perform the target task, it does not belong in the lab. External resources can cover additional context, but the lab itself stays focused.
+
+**Example of backwards design at work:**
+
+- ❌ Non-backwards approach: "This lab teaches MongoDB basics: CRUD operations, indexing, aggregation pipelines, and replication."
+- ✓ Backwards approach: "After this lab, you will **design a MongoDB schema for a ticket-tracking system and implement queries to support common access patterns** (view all tickets by user, filter by status, sort by date). The stages are: Stage 1 (understand access patterns), Stage 2 (design schema), Stage 3 (implement queries), Stage 4 (optimize with indexing). Aggregation pipelines and replication are out of scope."
 
 ---
 
@@ -429,10 +456,11 @@ A stage assumes learners will know concept X from external reading, but doesn't 
 
 ## How to Use This Rulebook
 
-1. **When creating a lab outline**: Use Sections 0-4 to structure learning objectives and stages
-2. **When writing a technical spec**: Use Sections 5-13 to ensure completeness
-3. **When evaluating a lab**: Score against Section 12 criteria
-4. **When building an environment**: Use Section 11 checklist
-5. **When debugging learner confusion**: Check Section 9 (terminology) and Section 10 (mental models)
+1. **When designing a lab**: Start with Section 0.2 (Backwards Design) to define your target task and work backwards
+2. **When creating a lab outline**: Use Sections 0.1, 1-4 to structure learning objectives and stages
+3. **When writing a technical spec**: Use Sections 5-13 to ensure completeness
+4. **When evaluating a lab**: Score against Section 12 criteria
+5. **When building an environment**: Use Section 11 checklist
+6. **When debugging learner confusion**: Check Section 9 (terminology) and Section 10 (mental models)
 
-**Questions?** Refer back to Section 0: **Humans Interpret, Agents Plan**. If a section is ambiguous, clarify it rather than assuming.
+**Foundation principles:** Always ground your work in Section 0.1 (**Humans Interpret, Agents Plan** — unambiguous, actionable instruction) and Section 0.2 (**Backwards Design** — end goal first, then work backwards). If a section is ambiguous, refer back to these principles rather than assuming.

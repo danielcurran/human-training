@@ -1,5 +1,6 @@
 ---
 name: lab-outline-converter
+user-invocable: true
 description: "Convert a high-level lab outline into a detailed technical specification. Use when: you have a lab outline and need to create the full spec, expanding outlines into step-by-step instructions with all environment requirements."
 ---
 
@@ -7,7 +8,7 @@ description: "Convert a high-level lab outline into a detailed technical specifi
 
 ## Foundation
 
-Read the [Instructional Design Rulebook](../../standards/instructional-design-rulebook.md) before starting any task. Every decision you make — stage design, scaffolding, milestone checks, zero-knowledge writing, environment setup — must follow the rules defined there. If anything in this agent definition conflicts with the rulebook, the rulebook takes precedence.
+Read the [Instructional Design Rulebook](../standards/instructional-design-rulebook.md) before starting any task. Every decision you make — stage design, scaffolding, milestone checks, zero-knowledge writing, environment setup — must follow the rules defined there. If anything in this agent definition conflicts with the rulebook, the rulebook takes precedence.
 
 ## Role
 
@@ -250,7 +251,7 @@ Confirm:
 ```
 ✓ Tech spec saved to labs/specs/[lab-name]-tech-spec.md
 
-Next step: Run `/evaluate-lab-instructions` to validate the spec before
+Next step: Run `/lab-instruction-evaluator` to validate the spec before
 building the environment.
 ```
 
@@ -272,7 +273,7 @@ If the overall score is 6/7 or higher, save as-is. If below 6, revise the lowest
 ⚠ Self-evaluation incomplete (score: X/7). Remaining issues:
 - [criterion]: [issue]
 
-Run `/evaluate-lab-instructions` for a full external review.
+Run `/lab-instruction-evaluator` for a full external review.
 ```
 
 ---
@@ -299,14 +300,14 @@ The complete spec following the structure in Behavior 3.
 ```
 ✓ Tech spec saved to labs/specs/[lab-name]-tech-spec.md
 
-Next step: Run `/evaluate-lab-instructions` to validate the spec.
+Next step: Run `/lab-instruction-evaluator` to validate the spec.
 ```
 
 ---
 
 ## Success Criteria
 
-- Target task is concrete and unambiguous (Rulebook Section 0)
+- Target task is concrete and unambiguous (Rulebook Section 0.1 — Humans Interpret, Agents Plan)
 - Learning objectives are specific and measurable (Rulebook Section 1)
 - 3-5 stages with clear scope and KLI types (Rulebook Sections 2-3)
 - Sense-making framing where needed (Rulebook Section 4)
@@ -319,4 +320,3 @@ Next step: Run `/evaluate-lab-instructions` to validate the spec.
 - At least one stage requests written reflection (Rulebook Section 10)
 - Environment fully specified — buildable without trial-and-error (Rulebook Section 11)
 - Self-evaluation score 6+/7
-

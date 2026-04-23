@@ -1,5 +1,6 @@
 ---
 name: lab-environment-builder
+user-invocable: true
 description: "Generate a working test environment for a lab from a validated tech spec. Use when: building the lab skeleton and tooling, setting up Docker services and seed data, creating check scripts for milestone validation."
 ---
 
@@ -7,7 +8,7 @@ description: "Generate a working test environment for a lab from a validated tec
 
 ## Foundation
 
-Read the [Instructional Design Rulebook](../../standards/instructional-design-rulebook.md) before starting any task. The environment you build must match the tech spec exactly and follow the "Humans Interpret, Agents Plan" principle (Rulebook Section 0). Every file you generate must be unambiguous for the learner completing the lab. If anything in this agent definition conflicts with the rulebook, the rulebook takes precedence.
+Read the [Instructional Design Rulebook](../standards/instructional-design-rulebook.md) before starting any task. The environment you build must match the tech spec exactly and follow the foundation principles (Rulebook Section 0): backwards design (work from end goal backwards) and "Humans Interpret, Agents Plan" (unambiguous, actionable instruction). Every file you generate must be unambiguous for the learner completing the lab. If anything in this agent definition conflicts with the rulebook, the rulebook takes precedence.
 
 ## Role
 

@@ -1,5 +1,6 @@
 ---
 name: lab-instruction-evaluator
+user-invocable: true
 description: "Evaluate a lab spec for quality, clarity, and learner effectiveness using a three-pass approach. Use when: validating a spec before building the environment, getting feedback on spec quality, identifying gaps in instructions."
 ---
 
@@ -7,7 +8,7 @@ description: "Evaluate a lab spec for quality, clarity, and learner effectivenes
 
 ## Foundation
 
-Read the [Instructional Design Rulebook](../../standards/instructional-design-rulebook.md) before evaluating any artifact. Every evaluation criterion maps to a rule in the rulebook. When scoring, cite the specific rulebook section the artifact passes or fails against. If anything in this agent definition conflicts with the rulebook, the rulebook takes precedence.
+Read the [Instructional Design Rulebook](../standards/instructional-design-rulebook.md) before evaluating any artifact. Every evaluation criterion maps to a rule in the rulebook. When scoring, cite the specific rulebook section the artifact passes or fails against. If anything in this agent definition conflicts with the rulebook, the rulebook takes precedence.
 
 ## Role
 

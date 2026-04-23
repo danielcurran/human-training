@@ -7,18 +7,20 @@ description: Index of all lab creation agents for building human learner trainin
 
 This directory contains specialized agents for creating, validating, and building technical training labs optimized for human learners in VS Code.
 
+**All agents are slash-command invokable.** Type `/` in the chat and select the agent you need. Each agent automatically consults the [Instructional Design Rulebook](../standards/instructional-design-rulebook.md) as its source of truth before taking any action.
+
 ## Workflow Overview
 
 The lab creation workflow follows this sequence:
 
 ```
-Lab Outline Designer
+/lab-outline-designer
         ↓
-Lab Outline Converter
+/lab-outline-converter
         ↓
-Lab Instruction Evaluator
+/lab-instruction-evaluator
         ↓
-Lab Environment Builder
+/lab-environment-builder
 ```
 
 ---
@@ -26,9 +28,13 @@ Lab Environment Builder
 ## Agents
 
 ### 1. Lab Outline Designer
+**Slash command:** `/lab-outline-designer`
+
 **File:** [lab-outline-designer.md](lab-outline-designer.md)
 
 Creates high-level lab outlines from a topic and learning objectives.
+
+**Source of truth:** [Instructional Design Rulebook](../standards/instructional-design-rulebook.md) — Uses Sections 0.1, 0.2, 1-4 (backwards design, learning objectives, stage structure)
 
 **Use when:**
 - Designing a new training lab from scratch
@@ -38,14 +44,18 @@ Creates high-level lab outlines from a topic and learning objectives.
 
 **Inputs:** Topic, target audience, environment, constraints
 **Output:** Lab outline saved to `labs/outlines/[lab-name]-outline.md`
-**Next step:** Run Lab Outline Converter
+**Next step:** Run `/lab-outline-converter`
 
 ---
 
 ### 2. Lab Outline Converter
+**Slash command:** `/lab-outline-converter`
+
 **File:** [lab-outline-converter.md](lab-outline-converter.md)
 
 Converts high-level outlines into detailed technical specifications.
+
+**Source of truth:** [Instructional Design Rulebook](../standards/instructional-design-rulebook.md) — Uses Sections 5-13 (input/output clarity, scaffolding, testability, terminology, environment buildability)
 
 **Use when:**
 - You have a lab outline and need the full spec
@@ -54,14 +64,18 @@ Converts high-level outlines into detailed technical specifications.
 
 **Inputs:** Lab outline (file), target task, audience, platform
 **Output:** Tech spec saved to `labs/specs/[lab-name]-tech-spec.md`
-**Next step:** Run Lab Instruction Evaluator
+**Next step:** Run `/lab-instruction-evaluator`
 
 ---
 
 ### 3. Lab Instruction Evaluator
+**Slash command:** `/lab-instruction-evaluator`
+
 **File:** [lab-instruction-evaluator.md](lab-instruction-evaluator.md)
 
 Validates lab specs for quality, clarity, and learner effectiveness using a three-pass approach.
+
+**Source of truth:** [Instructional Design Rulebook](../standards/instructional-design-rulebook.md) — Uses Section 12 (7-criteria evaluation: task clarity, input/output definition, coherence, testability, failure fallbacks, concept coverage, buildability)
 
 **Use when:**
 - Validating a spec before building the environment
@@ -71,14 +85,18 @@ Validates lab specs for quality, clarity, and learner effectiveness using a thre
 **Inputs:** Lab tech spec (file)
 **Output:** Evaluation report saved to `labs/reports/[lab-name]-tech-spec-eval-v[N].md`
 **Gate:** Spec must score ≥8/10 on both Spec Quality and Learner Experience
-**Next step:** If passing, run Lab Environment Builder; otherwise, revise spec
+**Next step:** If passing, run `/lab-environment-builder`; otherwise, revise spec
 
 ---
 
 ### 4. Lab Environment Builder
+**Slash command:** `/lab-environment-builder`
+
 **File:** [lab-environment-builder.md](lab-environment-builder.md)
 
 Generates working test environments from validated tech specs.
+
+**Source of truth:** [Instructional Design Rulebook](../standards/instructional-design-rulebook.md) — Uses Sections 0.2 (backwards design), 7 (milestone checks), 11 (environment buildability)
 
 **Use when:**
 - Building the lab skeleton and tooling
@@ -94,7 +112,7 @@ Generates working test environments from validated tech specs.
 ## Supporting Documentation
 
 ### Instructional Design Rulebook
-**File:** [standards/instructional-design-rulebook.md](../../standards/instructional-design-rulebook.md)
+**File:** [standards/instructional-design-rulebook.md](../standards/instructional-design-rulebook.md)
 
 The foundation for all lab creation. Defines:
 - Learning objectives and stage design
@@ -192,7 +210,7 @@ npm run check:all
 ## Principles
 
 ### Human Interpretation First
-Every lab is written so that a learner can understand what they are being asked to do **without ambiguity**. All agents follow this principle from Section 0 of the Instructional Design Rulebook.
+Every lab is written using **backwards design** (define the end goal, work backwards to design stages) and **unambiguous instruction** (learners know what to do without guessing). All agents follow the foundation principles from Section 0 of the Instructional Design Rulebook.
 
 ### Zero Prior Knowledge
 All labs assume learners have no domain knowledge. Every concept is defined on first use.
@@ -220,7 +238,7 @@ See these directories for reference lab specifications and environments:
 Make sure the `description` field in the agent's frontmatter includes the keywords from your request. The system uses `description` to decide which agent to invoke.
 
 ### Agent is missing features?
-Check the [Instructional Design Rulebook](../../standards/instructional-design-rulebook.md) for the authoritative standard. All agents implement it.
+Check the [Instructional Design Rulebook](../standards/instructional-design-rulebook.md) for the authoritative standard. All agents implement it.
 
 ### Lab environment won't start?
 1. Ensure Docker Desktop is running
@@ -232,7 +250,7 @@ Check the [Instructional Design Rulebook](../../standards/instructional-design-r
 
 ## Contact & Feedback
 
-These agents implement the [Instructional Design Rulebook](../../standards/instructional-design-rulebook.md). 
+These agents implement the [Instructional Design Rulebook](../standards/instructional-design-rulebook.md). 
 
 For questions or improvements:
 1. Check the rulebook first
