@@ -3,7 +3,7 @@ mode: ask
 description: Design a new lab outline from a topic and learning objectives
 ---
 
-[agents/lab-outline-designer.md](../../agents/lab-outline-designer.md)
+[agents/outline-builder.md](../../agents/outline-builder.md)
 
 Design a new lab outline using the agent definition above.
 

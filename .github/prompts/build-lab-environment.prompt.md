@@ -3,7 +3,7 @@ mode: agent
 description: Generate a working lab environment from a validated tech spec
 ---
 
-[agents/lab-environment-builder.md](../../agents/lab-environment-builder.md)
+[agents/lab-builder.md](../../agents/lab-builder.md)
 
 Build the test environment using the agent definition above.
 

@@ -8,11 +8,11 @@ We're committed to providing a welcoming and inspiring community for all.
 
 ### 1. Design a New Lab
 - Use the agent pipeline to create labs (see [agents/AGENTS.md](agents/AGENTS.md)):
-  1. `/lab-outline-designer` — Create outline from topic
-  2. `/lab-outline-converter` — Convert to technical spec
-  3. `/lab-instruction-evaluator` — Validate spec (gate: ≥8/10)
-  4. `/lab-environment-builder` — Build the environment
-  5. `/lab-instructional-qa-reviewer` — QA review for learner experience
+  1. `/outline-builder` — Create outline from topic
+  2. `/converter` — Convert to technical spec
+  3. `/spec-reviewer` — Validate spec (gate: ≥8/10)
+  4. `/lab-builder` — Build the environment
+  5. `/qa-review` — QA review for learner experience
 - Submit a pull request with your lab artifacts
 - We'll review and provide feedback
 

@@ -29,11 +29,11 @@ This repository is the counterpart to [`agent-training`](https://github.com/dani
 Labs are created using a 5-agent pipeline (see [agents/AGENTS.md](agents/AGENTS.md)):
 
 ```
-1. /lab-outline-designer     — Design high-level outline
-2. /lab-outline-converter     — Convert outline → technical spec
-3. /lab-instruction-evaluator — Validate spec (gate: ≥8/10)
-4. /lab-environment-builder   — Build lab environment
-5. /lab-instructional-qa-reviewer — QA review for learner experience
+1. /outline-builder     — Design high-level outline
+2. /converter     — Convert outline → technical spec
+3. /spec-reviewer — Validate spec (gate: ≥8/10)
+4. /lab-builder   — Build lab environment
+5. /qa-review — QA review for learner experience
 ```
 
 ## Getting Started

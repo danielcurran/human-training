@@ -3,7 +3,7 @@ mode: ask
 description: Convert a high-level lab outline into a detailed technical spec
 ---
 
-[agents/lab-outline-converter.md](../../agents/lab-outline-converter.md)
+[agents/spec-reviewer.md](../../agents/spec-reviewer.md)
 
 Convert the attached lab outline into a full technical spec using the agent definition above.
 

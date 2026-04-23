@@ -3,7 +3,7 @@ mode: ask
 description: Evaluate a lab technical specification for buildability and resulting lab quality
 ---
 
-[agents/lab-instruction-evaluator.md](../../agents/lab-instruction-evaluator.md)
+[agents/converter.md](../../agents/converter.md)
 
 Evaluate the attached lab technical specification using the agent definition above. The evaluation covers three passes:
 1. **Pass 1:** Section-by-section evaluation (buildability & quality)

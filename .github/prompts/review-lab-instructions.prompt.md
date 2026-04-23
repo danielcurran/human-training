@@ -3,7 +3,7 @@ mode: agent
 description: Review a completed lab environment for instructional gaps, QA issues, and learner UX
 ---
 
-[agents/lab-instructional-qa-reviewer.md](../../agents/lab-instructional-qa-reviewer.md)
+[agents/qa-review.md](../../agents/qa-review.md)
 
 Review the built lab environment using the agent definition above.
 
