@@ -27,6 +27,38 @@ Review the provided **built lab environment** (Docker services, VS Code workspac
 
 Output a structured review report with specific, actionable recommendations for fixes.
 
+---
+
+## Output Behavior
+
+**REQUIRED:** Save all QA review reports to `labs/reports/[lab-name]-instructional-qa-review-v[N].md`
+
+After completing all three passes, you MUST:
+
+1. **Derive the filename:**
+   - Extract `[lab-name]` from the lab directory name (e.g., `lab-test-env/building-app-with-code-agents/` → `building-app-with-code-agents`)
+   - Check `labs/reports/` for existing reviews of this lab
+   - Increment version: if `building-app-with-code-agents-instructional-qa-review-v1.md` exists, save as `v2`; if none exist, save as `v1`
+
+2. **Add YAML metadata header** at the top of the report:
+   ```yaml
+   ---
+   artifact: [lab name]
+   reviewer: qa-review
+   date: [ISO 8601 date, e.g., 2026-04-23]
+   version: v[N]
+   qa_status: [Ready for release / Minor fixes needed / Major revisions needed]
+   blocker_count: [number]
+   high_priority_count: [number]
+   ---
+   ```
+
+3. **Confirm the save** with a message at the end:
+   ```
+   ✓ QA Review saved to labs/reports/[lab-name]-instructional-qa-review-v[N].md
+   ```
+
+---
 
 ## Inputs
 
@@ -401,28 +433,15 @@ Use this checklist to ensure comprehensive review:
 
 ## Output Report Template
 
-Save the review report to `labs/reports/[lab-name]-instructional-qa-review-v[N].md`.
+**See Output Behavior section above for file save requirements.**
 
-**Rules:**
-- Derive `[lab-name]` from the lab environment's name
-- Derive `[N]` by checking `labs/reports/` for existing reviews and incrementing (start at `v1`)
-- Add YAML metadata header:
+Structure your review report as follows:
 
-```markdown
-artifact: [name of lab reviewed]
-reviewer: qa-review
-date: [ISO 8601 date]
-version: v[N]
-qa_status: [Ready for release / Minor fixes needed / Major revisions needed]
-blocker_count: [number of blockers]
-high_priority_count: [number of high priority issues]
-```
-
-Confirm:
-
-```
-✓ QA Review saved to labs/reports/[lab-name]-instructional-qa-review-v[N].md
-```
+1. **Executive Summary** — Lab name, date reviewed, QA status, blocker/issue counts
+2. **Pass 1: Stage-by-Stage Analysis** — For each stage: clarity, scaffolding, pacing, accuracy
+3. **Pass 2: Cross-Stage Coherence** — Data persistence, concept progression, README quality
+4. **Pass 3: UX and Polish** — Wording, formatting, typos, navigation, consistency
+5. **Priority Action Items** — Blockers, then high/medium/low priority issues with specific recommendations
 
 
 ## Review Guidelines
