@@ -1,0 +1,34 @@
+# Node.js
+node_modules/
+npm-debug.log
+package-lock.json
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Lab environments
+lab-test-env/*/node_modules/
+lab-test-env/*/.env
+lab-test-env/*/check-results/
+lab-test-env/*/mongo_data/
+
+# Build outputs
+dist/
+build/
+
+# Logs
+logs/
+*.log
